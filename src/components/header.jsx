@@ -1,4 +1,4 @@
-import logo from ".././assets/adetunji-logo-web.png";
+import logo from ".././assets/Adetunji full.svg";
 import { motion, useCycle, AnimatePresence } from "framer-motion";
 import { useRef } from "react";
 import MenuToggle from "./menu-toggle";
