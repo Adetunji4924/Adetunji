@@ -1,23 +1,83 @@
 import { motion } from "framer-motion";
-import MenuItem from "./menu-item";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { menuSlide } from "./animation";
+import LinkComponent from "./link";
 
-const variants = {
-    open: {
-      transition: { staggerChildren: 0.07, delayChildren: 0.2 }
-    },
-    closed: {
-      transition: { staggerChildren: 0.05, staggerDirection: -1 }
-    }
-  };
+const navItems = [
+  {
+    title: "Home",
+    href: "/",
+  },
 
-const Navigation = () => (
-    <motion.ul className="absolute" variants={variants}>
-      {itemIds.map(i => (
-        <MenuItem i={i} key={i} />
-      ))}
-    </motion.ul>
+  {
+    title: "About",
+    href: "/about",
+  },
+
+  {
+    title: "Experience",
+    href: "/experience",
+  },
+
+  {
+    title: "Projects",
+    href: "/projects",
+  },
+];
+
+const Navigation = () => {
+  const location = useLocation;
+  const [selectedIndicator, setSelectedIndicator] = useState(location.pathname);
+
+  useEffect(() => {
+    setSelectedIndicator(location.pathname);
+  }, [location]);
+
+  return (
+    <motion.div
+      variants={menuSlide}
+      initial="initial"
+      animate="enter"
+      exit="exit"
+      className="h-screen bg-primary-0 fixed top-0 right-0"
+    >
+      {/* body styles here */}
+      <div className="flex flex-col p-24 justify-between h-full box-border">
+        {/* nav styles here */}
+        <div
+          onMouseLeave={() => {
+            setSelectedIndicator(location.pathname);
+          }}
+          className="flex flex-col text-[2rem] mt-20 gap-3"
+        >
+          {/* header style here */}
+          <div className="border-b border-solid border-white text-[0.8rem] text-white">
+            <p>Navigation</p>
+          </div>
+
+          {navItems.map((data, index) => (
+            <LinkComponent
+              key={index}
+              data={{ ...data, index }}
+              isActive={selectedIndicator === data.href}
+              setSelectedIndicator={setSelectedIndicator}
+            />
+          ))}
+        </div>
+
+        <div className="flex w-[100%] justify-between gap-4 text-[0.8rem]">
+          <a>Awwwards</a>
+
+          <a>Instagram</a>
+
+          <a>Dribble</a>
+
+          <a>LinkedIn</a>
+        </div>
+      </div>
+    </motion.div>
   );
+};
 
-  export default Navigation
-  
-  const itemIds = [0, 1, 2];
+export default Navigation;
