@@ -1,18 +1,17 @@
+import Body from "./components/body"
+import Footer from "./components/footer"
 import Header from "./components/header"
+import ParticlesComponent from "./components/particles"
 
 const Home = () => {
     return (
-        <>
-            <div className="px-[5rem] h-lvh bg-tertiary-0">
+            <div className="px-[5rem] bg-background-0 overflow-hidden relative">
+                {/* <ParticlesComponent id="particles" /> */}
+                <ParticlesComponent className="-z-20 absolute h-[100%] w-[100%]"></ParticlesComponent>
                 <Header />
-                <div>
-                    <h1 className="text-white text-center">Hello Welcome to my portfolio</h1>
-                </div>
-                <div>
-
-                </div>
+                <Body />
+                <Footer />
             </div>
-        </>
     )
 }
 

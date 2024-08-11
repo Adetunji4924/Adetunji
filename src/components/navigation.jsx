@@ -40,7 +40,7 @@ const Navigation = () => {
       initial="initial"
       animate="enter"
       exit="exit"
-      className="h-screen bg-primary-0 fixed top-0 right-0"
+      className="h-screen bg-primary-0 fixed top-0 right-0 z-20"
     >
       {/* body styles here */}
       <div className="flex flex-col p-24 justify-between h-full box-border">
@@ -49,10 +49,10 @@ const Navigation = () => {
           onMouseLeave={() => {
             setSelectedIndicator(location.pathname);
           }}
-          className="flex flex-col text-[2rem] mt-20 gap-3"
+          className="flex flex-col text-[2rem] mt-20 gap-3 font-Labora text-background-0"
         >
           {/* header style here */}
-          <div className="border-b border-solid border-white text-[0.8rem] text-white">
+          <div className="border-b border-solid border-white text-[0.8rem] text-white font-poppins font-semibold">
             <p>Navigation</p>
           </div>
 
@@ -67,13 +67,13 @@ const Navigation = () => {
         </div>
 
         <div className="flex w-[100%] justify-between gap-4 text-[0.8rem]">
-          <a>Awwwards</a>
+          <a className="font-poppins text-white cursor-pointer">X</a>
 
-          <a>Instagram</a>
+          <a className="font-poppins text-white cursor-pointer">Instagram</a>
 
-          <a>Dribble</a>
+          <a className="font-poppins text-white cursor-pointer">GitHub</a>
 
-          <a>LinkedIn</a>
+          <a className="font-poppins text-white cursor-pointer">LinkedIn</a>
         </div>
       </div>
     </motion.div>

@@ -21,7 +21,7 @@ const MenuToggle = ({ toggle }) => {
         <motion.button
           initial={false}
           animate={active ? "open" : "closed"}
-          className="relative hover:bg-tertiary-0 h-16 w-16 rounded-full z-10"
+          className="relative hover:bg-tertiary-0 h-16 w-16 rounded-full z-40"
         >
           <motion.span
             style={{
