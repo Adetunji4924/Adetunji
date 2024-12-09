@@ -1,10 +1,11 @@
-const PrimaryButton = (props) => {
+const PrimaryButton = ({id, value, onButtonClick}) => {
   return (
     <button
       className="bg-primary-0 text-white px-12 py-4 rounded-md mt-4 font-poppins font-semibold"
-      id={props.id}
+      id={id}
+      onClick={onButtonClick}
     >
-      {props.value}
+      {value}
     </button>
   );
 };

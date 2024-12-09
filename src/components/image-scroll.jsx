@@ -91,7 +91,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useTransform, useScroll, motion } from 'framer-motion';
-import Lenis from '@studio-freight/lenis';
+// import Lenis from '@studio-freight/lenis';
 import '../index.css';
 
 const images = [
@@ -126,31 +126,47 @@ const ImageGallery = () => {
 
   // Initialize Lenis and set up the animation frame
   useEffect(() => {
-    const lenis = new Lenis({
-      smooth: true,         // Enable smooth scrolling
-      duration: 1.2,        // Scroll duration for smooth effect
-      easing: (t) => 1 - Math.pow(1 - t, 4), // Easing function for scroll
-    });
-
-    const onAnimationFrame = (time) => {
-      lenis.raf(time);
-      requestAnimationFrame(onAnimationFrame);
+    let isScrolling = false;
+    let currentScroll = 0;
+    let targetScroll = 0;
+    const scrollSpeed = 0.1; // Adjust for smoothness (lower is smoother)
+  
+    const smoothScroll = () => {
+      if (!isScrolling) return;
+  
+      currentScroll += (targetScroll - currentScroll) * scrollSpeed;
+      window.scrollTo(0, currentScroll);
+  
+      if (Math.abs(targetScroll - currentScroll) > 0.5) {
+        requestAnimationFrame(smoothScroll);
+      } else {
+        currentScroll = targetScroll;
+        isScrolling = false;
+      }
     };
-
-    requestAnimationFrame(onAnimationFrame);
-
-    // Update the viewport dimensions on resize
+  
+    const handleScroll = () => {
+      isScrolling = true;
+      targetScroll = window.scrollY;
+      if (!isScrolling) {
+        requestAnimationFrame(smoothScroll);
+      }
+    };
+  
     const handleResize = () => {
       setDimension({ width: window.innerWidth, height: window.innerHeight });
     };
-
+  
+    window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize);
     handleResize();
-
+  
     return () => {
+      window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+  
 
   return (
     <main className="main">

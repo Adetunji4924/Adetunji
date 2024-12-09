@@ -1,7 +1,10 @@
 // import developer from ".././assets/Coding concept illustration.svg";
 import PrimaryButton from "./pri-button";
+// import { useRef } from "react";
 
-const Hero = () => {
+const Hero = ({onViewProjectsClick}) => {
+
+    
     return (
         <div className="px-[5rem] flex flex-col justify-center items-center h-screen">
             <div className="flex flex-col justify-center items-center">
@@ -10,7 +13,7 @@ const Hero = () => {
                 <p className="text-secondary-0 font-poppins text-center w-[60%] font-light">I create pixel-perfect, visually engaging, and accessible digital experiences as a graphic designer and front-end developer.</p>
             </div>
             <div className="mt-[5rem]">
-                <PrimaryButton id={"view-Projects"} value={"View Projects"} />
+                <PrimaryButton onButtonClick={onViewProjectsClick} id={"view-Projects"} value={"View Projects"} />
             </div>
             {/* <div>
                 <img className="w-[40rem] p-0" src={developer} alt="" />

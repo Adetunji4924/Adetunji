@@ -10,6 +10,7 @@
 html {
     /* overflow: hidden; */
     height: 100%;
+    background-color: #10172A;
 }
 
 body {
@@ -77,3 +78,17 @@ body {
     height: 50%;
 }
 
+@keyframes slideInRight {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  .slide-in-right {
+    animation: slideInRight 0.3s ease-out;
+  }

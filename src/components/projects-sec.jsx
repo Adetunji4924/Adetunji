@@ -8,6 +8,8 @@ import AWAHBooks from "../assets/AWAHBooks 1.png";
 import Finspa from "../assets/Finspa 1.png";
 import Modal from "./modal";
 import FinhamCaseStudy from "../CaseStudies/finham";
+import WealthCaseStudy from "../CaseStudies/wealth";
+import EnsomeCaseStudy from "../CaseStudies/ensome";
 
 const ProjectSection = () => {
 
@@ -62,6 +64,7 @@ const ProjectSection = () => {
           description="A financial advisory web app offering tools for financial planning, health, education, and retirement. Built as a personal project with React, Firebase, and TailwindCSS."
           tools={["JavaScript", "React", "TailwindCSS", "Firebase"]}
           button="View Project"
+          onButtonClick={() => openModal(<WealthCaseStudy />)}
         />
 
         <Project
@@ -70,6 +73,7 @@ const ProjectSection = () => {
           description="A multi-page data web solution website built during the early stages of my frontend development journey using HTML, CSS, and JavaScript. Responsive and clean web pages."
           tools={["JavaScript", "HTML5", "CSS3", "Firebase"]}
           button="View Project"
+          onButtonClick={() => openModal(<EnsomeCaseStudy />)}
         />
       </div>
 
