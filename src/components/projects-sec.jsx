@@ -10,6 +10,9 @@ import Modal from "./modal";
 import FinhamCaseStudy from "../CaseStudies/finham";
 import WealthCaseStudy from "../CaseStudies/wealth";
 import EnsomeCaseStudy from "../CaseStudies/ensome";
+import FinspaCaseStudy from "../CaseStudies/finspa";
+import PureMatchCaseStudy from "../CaseStudies/purematch";
+import AwahBooksCaseStudy from "../CaseStudies/awahbooks";
 
 const ProjectSection = () => {
 
@@ -87,8 +90,10 @@ const ProjectSection = () => {
             "Adobe Illustrator",
             "After Effects",
             "Premiere Pro",
+            "Canva"
           ]}
           button="View Project"
+          onButtonClick={() => openModal(<FinspaCaseStudy />)}
         />
 
         <Project
@@ -97,6 +102,7 @@ const ProjectSection = () => {
           description="Designed the logo and brand visuals for Pure Match, a halal matchmaking app, while also contributing to social media designs and marketing strategies."
           tools={["Adobe PhotoShop", "Adobe Illustrator", "After Effects"]}
           button="View Project"
+          onButtonClick={() => openModal(<PureMatchCaseStudy />)}
         />
 
         <Project
@@ -110,6 +116,7 @@ const ProjectSection = () => {
             "After Effects",
           ]}
           button="View Project"
+          onButtonClick={() => openModal(<AwahBooksCaseStudy />)}
         />
       </div>
 
