@@ -30,13 +30,13 @@ const ProjectSection = () => {
   };
 
   return (
-    <div className="px-[1rem] md:px-[5rem] py-[5rem]">
-      <div className="flex flex-col justify-center items-center py-8">
-        <h1 className="text-primary-0 font-Labora font-bold text-[1.7rem] text-center">
+    <div className="px-[1rem] md:px-[5rem] py-[3rem] md:py-[5rem]">
+      <div className="flex flex-col justify-center md:items-center py-8">
+        <h1 className="text-primary-0 font-Labora font-bold text-[1.2rem] md:text-[1.7rem] md:text-center">
           Projects
         </h1>
         <div className="bg-secondary-0 w-12 h-2 rounded-full"></div>
-        <p className="font-poppins text-secondary-0 mt-4 text-center w-full md:w-[75%]">
+        <p className="font-poppins text-secondary-0 mt-4 md:text-center w-full md:w-[75%]">
           A showcase of some of the impactful projects I’ve worked on,
           highlighting my skills in both creative design and frontend
           development. From crafting engaging visuals to building functional web
@@ -45,7 +45,7 @@ const ProjectSection = () => {
         </p>
       </div>
 
-      <div className="flex justify-between gap-6 mt-8">
+      <div className="flex-col md:flex justify-between gap-6 mt-8">
         <Project
           img={Finham}
           project="Finham"

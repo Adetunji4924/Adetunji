@@ -2,7 +2,7 @@
 
 const Project = ( {img, project, description, tools, button,onButtonClick}) => {
   return (
-    <div className="pb-6 shadow-md shadow-tertiary-0 rounded-xl w-[35%]">
+    <div className="pb-6 shadow-md shadow-tertiary-0 mt-4 md:mt-0 rounded-xl w-full md:w-[35%]">
       <div>
         <img className="rounded-t-xl h-60 w-full" src={img} alt="" />
       </div>
