@@ -2,7 +2,7 @@ import FinhamVideo from "../assets/Finham Demo.mp4";
 import DevSkill from "../components/dev-skill";
 
 const PureMatchCaseStudy = () => {
-  const tools = ["JavaScript", "ReactJS", "TailwindCSS", "Firebase"];
+  const tools = ["Adobe Illustrator", "Adobe PhotoShop", "After Effects", "Canva"];
 
   const openPureMatch = () => {
     window.open("https://finham-demo.netlify.app/", "_blank");

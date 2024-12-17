@@ -9,7 +9,7 @@ const FinspaCaseStudy = () => {
             "Canva"];
 
   const openFinspa = () => {
-    window.open("https://finham-demo.netlify.app/", "_blank");
+    window.open("https://www.instagram.com/finspainv?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==", "_blank");
   };
 
   return (
@@ -48,9 +48,9 @@ const FinspaCaseStudy = () => {
           <a
             target="_blank"
             className="text-primary-0 text-[.8rem] underline font-poppins"
-            href="https://github.com/Adetunji4924/Wealth-App"
+            href="https://www.instagram.com/finspainv?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
           >
-            https://github.com/Adetunji4924/Wealth-App
+            https://www.instagram.com/finspainv
           </a>
         </div>
       </div>
