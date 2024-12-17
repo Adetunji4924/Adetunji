@@ -1,7 +1,7 @@
 const PrimaryButton = ({id, value, onButtonClick}) => {
   return (
     <button
-      className="bg-primary-0 text-white px-12 py-4 rounded-md mt-4 font-poppins font-semibold"
+      className="bg-primary-0 text-white px-12 py-4 rounded-md mt-4 font-poppins font-semibold w-full md:w-max"
       id={id}
       onClick={onButtonClick}
     >
