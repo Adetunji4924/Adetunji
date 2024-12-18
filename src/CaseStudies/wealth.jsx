@@ -16,7 +16,7 @@ const WealthCaseStudy = () => {
         muted
         loop
         playsInline
-        className="h-fit md:h-full object-cover pointer-events-none"
+        className="h-[30%] md:h-full object-cover pointer-events-none"
       />
       <div className="mt-4">
         <h1 className="text-white text-[1.5rem] font-Labora font-bold mb-4">
