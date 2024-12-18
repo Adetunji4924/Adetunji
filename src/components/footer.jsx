@@ -4,11 +4,11 @@ const Footer = () => {
 
    const currentYear = new Date().getFullYear()
   return (
-    <div className="bg-primary-0 flex flex-col justify-center items-center">
+    <div className="px-[1rem] md:px-[3rem] lg:px-[5rem] bg-primary-0 flex flex-col justify-center items-center">
       <div className="pt-[7rem] mb-12">
         <img className="w-8" src={AdetunjiLogo} alt="" />
       </div>
-      <div className="w-[40%]">
+      <div className="w-full md:w-[40%]">
         <p className="text-center text-[1rem] font-poppins text-background-0">
         Taking each day as it comes while learning, growing, and developing as a creative designer and frontend developer.
         </p>
@@ -16,7 +16,7 @@ const Footer = () => {
       <div className="flex gap-6 justify-center items-center mb-12 mt-12">
         <div className="border border-background-0 p-2 rounded-full hover:bg-white hover:border-white transition-all delay-75 cursor-pointer">
           <svg
-            className="w-8 h-8 fill-background-0"
+            className="w-6 md:w-8 h-6 md:h-8 fill-background-0"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 496 512"
           >
@@ -26,7 +26,7 @@ const Footer = () => {
 
         <div className="border border-background-0 p-2 rounded-full hover:bg-white hover:border-white transition-all delay-75 cursor-pointer">
           <svg
-            className="w-8 h-8 fill-background-0"
+            className="w-6 md:w-8 h-6 md:h-8 fill-background-0"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 448 512"
           >
@@ -35,19 +35,19 @@ const Footer = () => {
         </div>
 
         <div className="border border-background-0 p-2 rounded-full hover:bg-white hover:border-white transition-all delay-75 cursor-pointer">
-          <svg className="w-8 h-8 fill-background-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <svg className="w-6 md:w-8 h-6 md:h-8 fill-background-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
             <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" />
           </svg>{" "}
         </div>
 
         <div className="border border-background-0 p-2 rounded-full hover:bg-white hover:border-white transition-all delay-75 cursor-pointer">
-          <svg className="w-8 h-8 fill-background-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <svg className="w-6 md:w-8 h-6 md:h-8 fill-background-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
             <path d="M86.6 64l85.2 85.2C194.5 121.7 208 86.4 208 48c0-14.7-2-28.9-5.7-42.4C158.6 15 119 35.5 86.6 64zM64 86.6C35.5 119 15 158.6 5.6 202.3C19.1 206 33.3 208 48 208c38.4 0 73.7-13.5 101.3-36.1L64 86.6zM256 0c-7.3 0-14.6 .3-21.8 .9C238 16 240 31.8 240 48c0 47.3-17.1 90.5-45.4 124L256 233.4 425.4 64C380.2 24.2 320.9 0 256 0zM48 240c-16.2 0-32-2-47.1-5.8C.3 241.4 0 248.7 0 256c0 64.9 24.2 124.2 64 169.4L233.4 256 172 194.6C138.5 222.9 95.3 240 48 240zm463.1 37.8c.6-7.2 .9-14.5 .9-21.8c0-64.9-24.2-124.2-64-169.4L278.6 256 340 317.4c33.4-28.3 76.7-45.4 124-45.4c16.2 0 32 2 47.1 5.8zm-4.7 31.9C492.9 306 478.7 304 464 304c-38.4 0-73.7 13.5-101.3 36.1L448 425.4c28.5-32.3 49.1-71.9 58.4-115.7zM340.1 362.7C317.5 390.3 304 425.6 304 464c0 14.7 2 28.9 5.7 42.4C353.4 497 393 476.5 425.4 448l-85.2-85.2zM317.4 340L256 278.6 86.6 448c45.1 39.8 104.4 64 169.4 64c7.3 0 14.6-.3 21.8-.9C274 496 272 480.2 272 464c0-47.3 17.1-90.5 45.4-124z" />
           </svg>{" "}
         </div>
 
         <div className="border border-background-0 p-2 rounded-full hover:bg-white hover:border-white transition-all delay-75 cursor-pointer">
-          <svg className="w-8 h-8 fill-background-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <svg className="w-6 md:w-8 h-6 md:h-8 fill-background-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
             <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
           </svg>{" "}
         </div>

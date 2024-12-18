@@ -45,7 +45,7 @@ const ProjectSection = () => {
         </p>
       </div>
 
-      <div className="flex-col md:flex justify-between gap-6 mt-8">
+      <div className="flex flex-wrap md:flex-nowrap justify-between gap-6 mt-8">
         <Project
           img={Finham}
           project="Finham"
@@ -80,7 +80,7 @@ const ProjectSection = () => {
         />
       </div>
 
-      <div className="flex justify-between gap-6 mt-[5rem]">
+      <div className="flex flex-wrap md:flex-nowrap justify-between gap-6 mt-[5rem]">
         <Project
           img={Finspa}
           project="Finspa"

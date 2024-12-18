@@ -8,7 +8,7 @@ const Skill = () => {
     return (
         <div className="md:w-[50%]">
             <h1 className="text-white font-bold mb-2 mt-4 md:mb-4 text-[1.2rem] md:text-[1.5rem] font-poppins">Skills</h1>
-            <div className="flex-col md:flex justify-between gap-8 md:gap-4">
+            <div className="flex flex-wrap md:flex-nowrap justify-between gap-8 md:gap-4">
                 <div className="px-4 py-12 shadow-sm shadow-primary-0 rounded-xl w-full md:w-[50%]">
                     <h1 className="text-[1rem] md:text-[1.2rem] font-semibold font-poppins text-primary-0 mb-4">Frontend Developer</h1>
                     <p className="font-poppins font-light text-[.9rem] text-secondary-0">I build responsive, user-friendly web apps optimized for performance.</p>
