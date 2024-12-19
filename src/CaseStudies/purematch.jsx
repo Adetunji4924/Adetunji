@@ -5,7 +5,7 @@ const PureMatchCaseStudy = () => {
   const tools = ["Adobe Illustrator", "Adobe PhotoShop", "After Effects", "Canva"];
 
   const openPureMatch = () => {
-    window.open("https://finham-demo.netlify.app/", "_blank");
+    window.open("https://dribbble.com/shots/25355363-Purematch-Logo-Design", "_blank");
   };
 
   return (
@@ -38,9 +38,9 @@ const PureMatchCaseStudy = () => {
           <a
             target="_blank"
             className="text-primary-0 text-[.8rem] underline font-poppins"
-            href="https://github.com/Adetunji4924/Wealth-App"
+            href="https://dribbble.com/shots/25355363-Purematch-Logo-Design"
           >
-            https://github.com/Adetunji4924/Wealth-App
+            Pure Match
           </a>
         </div>
       </div>

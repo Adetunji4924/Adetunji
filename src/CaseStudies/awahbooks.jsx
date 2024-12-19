@@ -5,7 +5,7 @@ const AwahBooksCaseStudy = () => {
   const tools = ["JavaScript", "ReactJS", "TailwindCSS", "Firebase"];
 
   const openAwahbooks = () => {
-    window.open("https://finham-demo.netlify.app/", "_blank");
+    window.open("https://dribbble.com/shots/25355262-AWAHBOOKS-Logo-Design", "_blank");
   };
 
   return (
@@ -53,9 +53,9 @@ const AwahBooksCaseStudy = () => {
           <a
             target="_blank"
             className="text-primary-0 text-[.8rem] underline font-poppins"
-            href="https://github.com/Adetunji4924/Wealth-App"
+            href="https://dribbble.com/shots/25355262-AWAHBOOKS-Logo-Design"
           >
-            https://github.com/Adetunji4924/Wealth-App
+            AWAHBooks
           </a>
         </div>
       </div>
