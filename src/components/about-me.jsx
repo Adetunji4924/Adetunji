@@ -1,5 +1,6 @@
 import PrimaryButton from "./pri-button";
 import Skill from "./skills";
+import { Link } from "react-router-dom";
 
 const About = () => {
   return (
@@ -40,7 +41,9 @@ const About = () => {
             a captivating brand identity, I’m here to help businesses connect
             with their audiences in impactful ways.
           </p>
+          <Link to="contact-me" relative="path">
           <PrimaryButton value={"Contact Me"}/>
+          </Link>
         </div>
 
         <Skill />

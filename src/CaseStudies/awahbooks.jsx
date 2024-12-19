@@ -1,4 +1,4 @@
-import FinhamVideo from "../assets/Finham Demo.mp4";
+import awahBooks from "../assets/AWAHBooks 1.png";
 import DevSkill from "../components/dev-skill";
 
 const AwahBooksCaseStudy = () => {
@@ -10,14 +10,7 @@ const AwahBooksCaseStudy = () => {
 
   return (
     <div className="flex flex-col justify-center items-center gap-4 mt-20">
-      <video
-        src={FinhamVideo}
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="h-[200px] md:h-full w-full object-cover pointer-events-none"
-      />
+      <img className="w-full" src={awahBooks} alt="AWAHBooks" />
       <div className="mt-4">
         <h1 className="text-white text-[1.5rem] font-Labora font-bold mb-4">
           Wealth Case Study

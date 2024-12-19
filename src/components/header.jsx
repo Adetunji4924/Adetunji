@@ -5,8 +5,9 @@ import { motion, useCycle, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import MenuToggle from "./menu-toggle";
 import Navigation from "./navigation";
+import { Link } from "react-router-dom";
 
-const Header = () => {
+const Header = ({refs}) => {
   const [isOpen, toggleOpen] = useCycle(false, true);
   const containerRef = useRef(null);
   const [isSticky, setSticky] = useState(false);
@@ -30,6 +31,7 @@ const Header = () => {
         isSticky ? "fixed top-0 left-0 w-full z-20 bg-background-0 shadow-sm shadow-tertiary-0 py-0" : "relative"
       } transition-all duration-300 ease-in-out px-[1rem] md:px-[3rem] lg:px-[5rem] flex justify-between items-center py-2`}
     >
+      <Link to="/" relative="path">
       <div className="flex justify-center items-center gap-1">
         <motion.img
           className="w-9 md:w-16"
@@ -55,6 +57,7 @@ const Header = () => {
           transition={{ duration: 1, ease: "easeInOut" }}
         />
       </div>
+      </Link>
       <motion.nav
         initial={false}
         animate={isOpen ? "open" : "closed"}
@@ -62,7 +65,7 @@ const Header = () => {
       >
         <MenuToggle toggle={toggleOpen} />
         <AnimatePresence mode="wait">
-          {isOpen && <Navigation />}
+          {isOpen && <Navigation refs={refs} />}
         </AnimatePresence>
       </motion.nav>
     </div>

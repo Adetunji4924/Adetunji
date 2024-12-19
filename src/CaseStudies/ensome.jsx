@@ -1,4 +1,4 @@
-import FinhamVideo from "../assets/Finham Demo.mp4";
+import EnsomeVideo from "../assets/EnsomeVideo.mp4";
 import DevSkill from "../components/dev-skill";
 
 const EnsomeCaseStudy = () => {
@@ -11,7 +11,7 @@ const EnsomeCaseStudy = () => {
   return (
     <div className="flex flex-col justify-center items-center gap-4 mt-20">
       <video
-        src={FinhamVideo}
+        src={EnsomeVideo}
         autoPlay
         muted
         loop
