@@ -1,4 +1,3 @@
-// import PrimaryButton from "./pri-button";
 
 const Project = ( {img, project, description, tools, button,onButtonClick}) => {
   return (

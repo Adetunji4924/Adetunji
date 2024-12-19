@@ -92,3 +92,19 @@ body {
   .slide-in-right {
     animation: slideInRight 0.3s ease-out;
   }
+
+  @media (max-width: 768px) {
+    .gallery {
+        flex-wrap: wrap;
+    }
+
+    .gallery .column{
+        width: 100%;
+    }
+
+    .gallery .column .imageContainer {
+        height: 50%;
+        width: 100%;
+    }
+  }
+  
