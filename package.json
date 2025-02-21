@@ -13,7 +13,11 @@
     "@studio-freight/lenis": "^1.0.42",
     "@tsparticles/all": "^3.5.0",
     "@tsparticles/react": "^3.0.0",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
     "framer-motion": "^11.2.12",
+    "nodemailer": "^6.9.16",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.24.1"

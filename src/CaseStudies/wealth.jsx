@@ -5,7 +5,7 @@ const WealthCaseStudy = () => {
   const tools = ["JavaScript", "ReactJS", "TailwindCSS", "Firebase"];
 
   const openWealth = () => {
-    window.open("https://finham-demo.netlify.app/", "_blank");
+    window.open("https://wealth-app.netlify.app/", "_blank");
   };
 
   return (
