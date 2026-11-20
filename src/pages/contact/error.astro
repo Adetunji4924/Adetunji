@@ -1,0 +1,15 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Button from '@/components/ui/Button.astro';
+import StatusPage from '@/components/ui/StatusPage.astro';
+import { site } from '@/config/site';
+---
+
+<BaseLayout title="Message not sent" description="Your message didn't go through." noindex>
+  <StatusPage label="Contact">
+    <Fragment slot="title">Your message didn't go through.</Fragment>
+    <Fragment slot="lead">Sorry about that. Please try again, or email me directly at <a href={`mailto:${site.email}`} class="link-underline text-ink">{site.email}</a>.</Fragment>
+    <Button href="/contact" icon="dots">Try again</Button>
+    <Button href={`mailto:${site.email}`} variant="secondary" icon="none">Email me</Button>
+  </StatusPage>
+</BaseLayout>

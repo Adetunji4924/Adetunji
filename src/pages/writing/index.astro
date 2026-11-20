@@ -1,0 +1,53 @@
+---
+import { webPageSchema, breadcrumbSchema } from '@/lib/schema';
+import { canonicalUrl } from '@/lib/url';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageIntro from '@/components/ui/PageIntro.astro';
+import Ideas from '@/components/home/Ideas.astro';
+import CtaCard from '@/components/ui/CtaCard.astro';
+import { getArticles } from '@/lib/content';
+
+const hasArticles = (await getArticles()).length > 0;
+const topics = [
+  'Engineering & architecture',
+  'AI & technology',
+  'Product development',
+  'Business & entrepreneurship',
+  'Leadership & human behaviour',
+  'Books & ideas',
+  'Learning',
+];
+---
+
+<BaseLayout
+  title="Writing"
+  description="Essays and notes by Adetunji Adewole on software engineering, systems architecture, AI, product, business, leadership and ideas."
+  jsonLd={[
+    webPageSchema({ url: canonicalUrl(Astro.url, Astro.site), base: Astro.site, name: 'Writing by Adetunji Adewole', description: 'Essays and notes by Adetunji Adewole.', type: 'CollectionPage' }),
+    breadcrumbSchema(Astro.site, [{ name: 'Writing', path: '/writing' }]),
+  ]}
+>
+  <PageIntro
+    eyebrow="Writing"
+    title="Thinking out loud."
+    lead={hasArticles
+      ? 'Essays and notes on technology, products, business and the people behind them.'
+      : 'Essays and notes on technology, products, business and the people behind them. Nothing is published yet, by design: I would rather start with a few pieces worth reading.'}
+  />
+
+  <Ideas heading={false} limit={100} />
+
+  <section aria-labelledby="topics-title" class="frame-rule">
+    <div class="container-site py-16 md:py-24">
+      <h2 id="topics-title" class="text-[length:var(--text-h2)]">Topics.</h2>
+      <p class="mt-4 max-w-xl text-muted">What the writing will cover.</p>
+      <ul class="mt-8 flex flex-wrap gap-2">
+        {topics.map((t, i) => <li class="rounded-full bg-paper-2 px-5 py-3 text-[length:var(--text-h4)]" data-reveal={String(i % 4)}>{t}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <div class="frame-rule pt-16 md:pt-24">
+    <CtaCard title="Have a topic in mind?" line="If there's something you'd like me to write about, I'd like to hear it." />
+  </div>
+</BaseLayout>

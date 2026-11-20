@@ -1,24 +1,30 @@
-# Logs
-logs
-*.log
+# build output
+dist/
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+*.log
 
-node_modules
-dist
-dist-ssr
-*.local
+# environment
+.env
+.env.*
 
-# Editor directories and files
+# OS / editor
+.DS_Store
 .vscode/*
 !.vscode/extensions.json
 .idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+
+# Netlify
+.netlify
+
+# Third-party reference material (not ours to publish)
+website reference.md
+
+# Cloudflare
+.wrangler/
+.dev.vars*

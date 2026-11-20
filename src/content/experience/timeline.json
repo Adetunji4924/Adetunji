@@ -1,0 +1,41 @@
+[
+  {
+    "id": "design",
+    "stage": "Design",
+    "title": "Creative design",
+    "period": "From 2022",
+    "detail": "Started with Canva, then Illustrator and Photoshop. Brand and marketing work for Finspa, Pure Match and AWAH Books.",
+    "order": 1
+  },
+  {
+    "id": "frontend",
+    "stage": "Engineering",
+    "title": "Frontend engineering",
+    "detail": "HTML, CSS and JavaScript, then React. Ensome, Wealth, and Finham with a product team.",
+    "order": 2
+  },
+  {
+    "id": "architecture",
+    "stage": "Systems",
+    "title": "Full-stack and systems architecture",
+    "detail": "Led the architecture of a commission and payout platform now in its pilot phase, and contributed across the stack.",
+    "order": 3
+  },
+  {
+    "id": "product",
+    "stage": "Product",
+    "title": "Product building",
+    "detail": "Co-founder, Product Lead and Creative Director at Equalsphere. Founder of Vehtriq.",
+    "current": true,
+    "order": 4
+  },
+  {
+    "id": "leadership",
+    "stage": "Leadership",
+    "title": "Head of IT, Greenleaf Africa",
+    "period": "From March 2026",
+    "detail": "Leading technology at Greenleaf Africa.",
+    "current": true,
+    "order": 5
+  }
+]

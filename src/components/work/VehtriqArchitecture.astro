@@ -1,0 +1,43 @@
+---
+/** Target architecture for Vehtriq: the chosen direction, not a claim of what is deployed. */
+const box = 'rounded-lg border border-ink/80 bg-paper px-3 py-2.5 text-center text-sm';
+---
+
+<figure class="not-prose my-12 max-w-none">
+  <div class="rounded-2xl bg-paper-2 p-5 sm:p-8" role="img" aria-labelledby="vehtriq-arch-cap">
+    <div class="grid gap-3 text-ink" aria-hidden="true">
+      <div class={box}>Fleet operators · web app</div>
+      <div class="mx-auto h-5 w-px bg-ink/60"></div>
+      <div class="rounded-lg bg-ink px-3 py-3 text-center text-sm font-semibold text-paper">
+        API · Hono on Cloudflare Workers
+      </div>
+      <div class="mx-auto h-5 w-px bg-ink/60"></div>
+      <div class="grid gap-3 sm:grid-cols-3">
+        <div class="space-y-2 rounded-xl border border-dashed border-line-strong p-3">
+          <p class="eyebrow text-muted">Data</p>
+          <div class={box}>Neon PostgreSQL</div>
+          <div class={box}>via Hyperdrive</div>
+        </div>
+        <div class="space-y-2 rounded-xl border border-dashed border-line-strong p-3">
+          <p class="eyebrow text-muted">Platform services</p>
+          <div class="grid grid-cols-2 gap-2">
+            <div class={box}>R2</div>
+            <div class={box}>KV</div>
+            <div class={box}>Durable Objects</div>
+            <div class={box}>Queues</div>
+          </div>
+        </div>
+        <div class="space-y-2 rounded-xl border border-dashed border-line-strong p-3">
+          <p class="eyebrow text-muted">AI gateway</p>
+          <div class="rounded-lg bg-yellow px-3 py-2.5 text-center text-sm text-night">Gemini · OCR workflows</div>
+          <div class="rounded-lg bg-yellow px-3 py-2.5 text-center text-sm text-night">Claude · reasoning &amp; narrative</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <figcaption id="vehtriq-arch-cap">
+    Target architecture (direction chosen, implementation in progress). A Workers API sits in front of
+    PostgreSQL and Cloudflare platform services. A multi-model gateway routes OCR work to Gemini and reasoning
+    to Claude.
+  </figcaption>
+</figure>

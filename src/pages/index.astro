@@ -1,0 +1,34 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/home/Hero.astro';
+import Marquee from '@/components/home/Marquee.astro';
+import Gallery from '@/components/home/Gallery.astro';
+import WorkShowcase from '@/components/home/WorkShowcase.astro';
+import Ideas from '@/components/home/Ideas.astro';
+import AboutSection from '@/components/home/AboutSection.astro';
+import Capabilities from '@/components/home/Capabilities.astro';
+import Philosophy from '@/components/home/Philosophy.astro';
+import SectionRail from '@/components/home/SectionRail.astro';
+import { profilePageSchema } from '@/lib/schema';
+import { site } from '@/config/site';
+import { canonicalUrl } from '@/lib/url';
+
+const description =
+  'Adetunji Adewole is a technology leader, systems architect and product builder: Head of IT at Greenleaf Africa and founder of Vehtriq.';
+---
+
+<BaseLayout
+  description={description}
+  type="profile"
+  jsonLd={profilePageSchema({ url: canonicalUrl(Astro.url, Astro.site), base: Astro.site, name: site.name, description })}
+>
+  <SectionRail />
+  <Hero />
+  <Marquee />
+  <Gallery />
+  <WorkShowcase />
+  <Ideas />
+  <AboutSection />
+  <Capabilities />
+  <Philosophy />
+</BaseLayout>

@@ -1,0 +1,31 @@
+---
+/** Closing call to action used at the end of inner pages. */
+import { site } from '@/config/site';
+import Button from '@/components/ui/Button.astro';
+
+export interface Props {
+  title?: string;
+  line?: string;
+}
+const { title = 'Good systems start with good conversations.', line = 'A project, an opportunity or an idea worth exploring: I’d like to hear about it.' } = Astro.props;
+---
+
+<section aria-labelledby="cta-title" class="container-site pb-16 md:pb-24">
+  <div class="on-dark relative overflow-hidden rounded-[var(--radius-card)] bg-night px-6 py-14 text-snow md:px-14 md:py-20 dark:ring-1 dark:ring-white/10" data-reveal>
+    <div class="cta-glow pointer-events-none absolute -right-24 -bottom-40 size-[28rem] rounded-full" aria-hidden="true"></div>
+    <div class="relative max-w-2xl">
+      <h2 id="cta-title" class="text-[length:var(--text-h2)] leading-[1.1]">{title}</h2>
+      <p class="mt-4 text-muted-dark">{line}</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <Button href="/contact" variant="accent" icon="none" size="lg">Let's talk</Button>
+        <Button href={`mailto:${site.email}`} variant="ghost-dark" icon="none" size="lg">{site.email}</Button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-glow {
+    background: radial-gradient(closest-side, rgb(240 240 0 / 0.22), transparent);
+  }
+</style>

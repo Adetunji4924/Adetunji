@@ -1,0 +1,48 @@
+---
+/** Shared layout for 404, thanks and error pages: the floating mark, a title, a way on. */
+import Logo from '@/components/ui/Logo.astro';
+
+export interface Props {
+  label: string;
+}
+const { label } = Astro.props;
+---
+
+<section class="container-site grid min-h-[calc(100svh-12rem)] place-items-center py-16 text-center">
+  <div class="flex flex-col items-center">
+    <div class="relative" aria-hidden="true">
+      <Logo variant="icon" class="status-mark h-auto w-28 text-yellow drop-shadow-[0_20px_24px_rgb(0_0_0/0.2)] md:w-36" />
+      <span class="status-floor absolute -bottom-6 left-1/2 h-3 w-24 -translate-x-1/2 rounded-[50%] bg-ink/15 blur-md"></span>
+    </div>
+    <p class="mt-14 inline-flex items-center gap-2 rounded-full bg-paper-2 px-3 py-1 text-sm text-muted">{label}</p>
+    <h1 class="mt-5 max-w-3xl text-[length:var(--text-h1)] leading-[1.05]">
+      <slot name="title" />
+    </h1>
+    <p class="mt-5 max-w-lg text-muted"><slot name="lead" /></p>
+    <div class="mt-10 flex flex-wrap justify-center gap-3">
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.status-mark) {
+      animation: status-float 6s ease-in-out infinite;
+    }
+    .status-floor {
+      animation: status-floor 6s ease-in-out infinite;
+    }
+  }
+  @keyframes status-float {
+    50% {
+      transform: translateY(-10px) rotate(-3deg);
+    }
+  }
+  @keyframes status-floor {
+    50% {
+      transform: translateX(-50%) scale(0.8);
+      opacity: 0.6;
+    }
+  }
+</style>

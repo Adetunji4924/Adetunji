@@ -1,0 +1,33 @@
+---
+/**
+ * The Adétúnjí logo (from /public/logos, cleaned in src/assets/brand).
+ * `wordmark`: yellow tile + letters in currentColor. `icon`: the tile alone.
+ * Set `tile="current"` for a one-colour logo (e.g. the faint footer wordmark).
+ */
+import Wordmark from '@/assets/brand/wordmark.svg';
+import Icon from '@/assets/brand/icon.svg';
+
+export interface Props {
+  variant?: 'wordmark' | 'icon';
+  tile?: 'yellow' | 'current';
+  class?: string;
+  title?: string;
+}
+const { variant = 'wordmark', tile = 'yellow', class: className = '', title } = Astro.props;
+const Svg = variant === 'icon' ? Icon : Wordmark;
+const classes = [tile === 'yellow' ? 'logo-yellow' : '', className].filter(Boolean).join(' ');
+---
+
+{
+  title ? (
+    <Svg class={classes} role="img" aria-label={title} />
+  ) : (
+    <Svg class={classes} aria-hidden="true" />
+  )
+}
+
+<style is:global>
+  .logo-yellow {
+    --logo-tile: var(--color-yellow);
+  }
+</style>

@@ -1,0 +1,25 @@
+---
+export interface Props {
+  kind: 'live' | 'pilot' | 'in-development' | 'archived' | 'delivered';
+  label: string;
+  dark?: boolean;
+}
+const { kind, label, dark = false } = Astro.props;
+const dot: Record<Props['kind'], string> = {
+  live: 'bg-[#1f8a4c]',
+  pilot: 'bg-yellow ring-1 ring-ink/40',
+  'in-development': 'bg-transparent ring-1 ring-current',
+  archived: 'bg-line-strong',
+  delivered: 'bg-ink',
+};
+---
+
+<span
+  class:list={[
+    'inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold',
+    dark ? 'bg-paper/10 text-paper' : 'bg-paper-2 text-ink',
+  ]}
+>
+  <span class:list={['size-2 rounded-full', dot[kind]]} aria-hidden="true"></span>
+  {label}
+</span>

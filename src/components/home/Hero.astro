@@ -1,0 +1,180 @@
+---
+import { site } from '@/config/site';
+import Button from '@/components/ui/Button.astro';
+import Logo from '@/components/ui/Logo.astro';
+
+const ring = `${site.philosophy.join(' · ')} · `;
+---
+
+<section id="home" data-section="Home" aria-labelledby="hero-title" class="relative">
+  <div
+    class="container-site grid min-h-[calc(100svh-6rem)] items-center gap-12 py-10 lg:grid-cols-[1fr_auto_1fr] lg:gap-14"
+  >
+    <div class="order-2 text-center lg:order-1 lg:text-left">
+      <h1 id="hero-title" class="text-[length:var(--text-h1)] leading-[1.04]">
+        <span class="sr-only">{site.name}: {site.descriptor.join(', ')}</span>
+        <span aria-hidden="true" class="role block min-h-[2.1em]" data-roles={site.descriptor.join('|')}>
+          {site.descriptor[0]}
+        </span>
+      </h1>
+      <div class="mt-8 flex flex-wrap justify-center gap-3 lg:justify-start" data-reveal="2">
+        <Button href="/about" variant="secondary" icon="none">About me</Button>
+        <Button href="#work" variant="secondary">See my work</Button>
+      </div>
+    </div>
+
+    <div class="order-1 mx-auto lg:order-2" data-reveal>
+      <div class="hero-mark relative grid size-[min(72vw,22rem)] place-items-center" data-tilt>
+        <svg viewBox="0 0 200 200" class="orbit absolute inset-0 size-full text-muted" aria-hidden="true">
+          <defs>
+            <path id="ring-path" d="M100,100 m-88,0 a88,88 0 1,1 176,0 a88,88 0 1,1 -176,0"></path>
+          </defs>
+          <text class="fill-current text-[8.6px] font-medium tracking-[0.18em] uppercase">
+            <textPath href="#ring-path" textLength="548">{ring}</textPath>
+          </text>
+        </svg>
+        <div class="tilt relative w-[54%]">
+          <Logo variant="icon" class="float relative z-10 h-auto w-full text-yellow drop-shadow-[0_24px_30px_rgb(0_0_0/0.22)]" />
+          <span class="floor absolute -bottom-[18%] left-1/2 h-[9%] w-[80%] -translate-x-1/2 rounded-[50%] bg-ink/15 blur-md"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="order-3 mx-auto max-w-sm text-center lg:mx-0 lg:text-left" data-reveal="1">
+      <p class="text-muted">Hi, I'm <span class="text-ink">{site.name}</span></p>
+      <p class="mt-3 text-[length:var(--text-h4)] leading-snug font-medium">I architect systems and build products.</p>
+      <p class="mt-3 leading-relaxed text-muted">
+        I work across engineering, systems architecture and product, connecting technology with the business it serves
+        and the people who use it.
+      </p>
+      <p class="mt-6 inline-flex items-center gap-2 text-sm text-muted">
+        <span class="relative flex size-2" aria-hidden="true">
+          <span class="pulse absolute inline-flex size-full rounded-full bg-yellow"></span>
+          <span class="relative inline-flex size-2 rounded-full bg-yellow ring-1 ring-ink/20"></span>
+        </span>
+        Head of IT, Greenleaf Africa · Founder, Vehtriq
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .role :global(.ch) {
+    display: inline-block;
+    transition:
+      transform 600ms var(--ease-out-soft),
+      opacity 400ms,
+      filter 500ms;
+  }
+  .role :global(.ch.out) {
+    transform: translateY(-0.45em);
+    opacity: 0;
+    filter: blur(6px);
+  }
+  .role :global(.ch.in) {
+    transform: translateY(0.45em);
+    opacity: 0;
+    filter: blur(6px);
+  }
+  .tilt {
+    transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: transform 500ms var(--ease-out-soft);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .orbit {
+      animation: spin 40s linear infinite;
+    }
+    .float {
+      animation: float 6s ease-in-out infinite;
+    }
+    .floor {
+      animation: floor 6s ease-in-out infinite;
+    }
+    .pulse {
+      animation: pulse 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+  }
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes float {
+    50% {
+      transform: translateY(-4%);
+    }
+  }
+  @keyframes floor {
+    50% {
+      transform: translateX(-50%) scale(0.85);
+      opacity: 0.6;
+    }
+  }
+  @keyframes pulse {
+    75%,
+    100% {
+      transform: scale(2.4);
+      opacity: 0;
+    }
+  }
+</style>
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Rotating role, letter by letter. The h1's accessible text is the sr-only line.
+  const role = document.querySelector<HTMLElement>('.role[data-roles]');
+  if (role && !reduce) {
+    const roles = (role.dataset.roles ?? '').split('|');
+    let index = 0;
+    const render = (text: string, state: 'in' | '') => {
+      role.textContent = '';
+      text.split(' ').forEach((word, w, words) => {
+        const wrap = document.createElement('span');
+        wrap.className = 'inline-block whitespace-nowrap';
+        [...word].forEach((c) => {
+          const s = document.createElement('span');
+          s.className = `ch ${state}`;
+          s.textContent = c;
+          wrap.append(s);
+        });
+        role.append(wrap);
+        if (w < words.length - 1) role.append(' ');
+      });
+      return [...role.querySelectorAll<HTMLElement>('.ch')];
+    };
+    const stagger = (chars: HTMLElement[]) => chars.forEach((c, i) => (c.style.transitionDelay = `${i * 28}ms`));
+
+    window.setInterval(() => {
+      if (document.hidden) return;
+      const current = [...role.querySelectorAll<HTMLElement>('.ch')];
+      const out = current.length ? current : render(roles[index] ?? '', '');
+      stagger(out);
+      out.forEach((c) => c.classList.add('out'));
+      window.setTimeout(() => {
+        index = (index + 1) % roles.length;
+        const next = render(roles[index] ?? '', 'in');
+        stagger(next);
+        requestAnimationFrame(() => requestAnimationFrame(() => next.forEach((c) => c.classList.remove('in'))));
+      }, 450 + out.length * 28);
+    }, 3600);
+  }
+
+  // Gentle 3D tilt of the mark toward the pointer.
+  const mark = document.querySelector<HTMLElement>('[data-tilt]');
+  const tilt = mark?.querySelector<HTMLElement>('.tilt');
+  if (mark && tilt && !reduce && matchMedia('(pointer: fine)').matches) {
+    window.addEventListener(
+      'pointermove',
+      (e) => {
+        const r = mark.getBoundingClientRect();
+        const x = (e.clientX - (r.left + r.width / 2)) / window.innerWidth;
+        const y = (e.clientY - (r.top + r.height / 2)) / window.innerHeight;
+        tilt.style.setProperty('--ry', `${(x * 22).toFixed(2)}deg`);
+        tilt.style.setProperty('--rx', `${(-y * 22).toFixed(2)}deg`);
+      },
+      { passive: true },
+    );
+  }
+</script>

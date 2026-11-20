@@ -1,0 +1,34 @@
+---
+/** The career timeline as a table. `detailed` adds each stage's description. */
+import { getTimeline } from '@/lib/content';
+
+export interface Props {
+  detailed?: boolean;
+  class?: string;
+}
+const { detailed = false, class: className = '' } = Astro.props;
+const timeline = await getTimeline();
+---
+
+<ol class:list={['border-t border-line text-sm', className]}>
+  {
+    timeline.map((m) => (
+      <li class="grid grid-cols-[1fr_auto] gap-x-6 gap-y-1 border-b border-line px-2 py-4 md:grid-cols-[2fr_1fr_1fr]" data-reveal>
+        <span>
+          <span class="font-medium">{m.data.title}</span>
+          {detailed && <span class="mt-1 block max-w-xl leading-relaxed text-muted">{m.data.detail}</span>}
+        </span>
+        <span class="text-muted max-md:order-3 max-md:col-span-2">{m.data.stage}</span>
+        <span class="text-right text-muted">
+          {m.data.current ? (
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-yellow px-2.5 py-0.5 text-xs font-medium whitespace-nowrap text-night">
+              Now{m.data.period && <span class="font-normal"> · {m.data.period}</span>}
+            </span>
+          ) : (
+            (m.data.period ?? '')
+          )}
+        </span>
+      </li>
+    ))
+  }
+</ol>

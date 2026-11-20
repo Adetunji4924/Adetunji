@@ -1,0 +1,53 @@
+---
+import { site } from '@/config/site';
+import Button from '@/components/ui/Button.astro';
+
+const lines = site.philosophy; // "Building technology." … "Creating value."
+---
+
+<section aria-labelledby="philosophy-title" class="frame-rule">
+  <div class="container-site py-24 text-center md:py-36">
+    <h2 id="philosophy-title" class="sr-only">What I believe</h2>
+    <p class="philosophy mx-auto max-w-4xl text-[length:var(--text-display)] leading-[1.02] font-medium tracking-[-0.04em]" data-reveal>
+      {
+        lines.map((l, i) => (
+          <span class:list={['line block', i === lines.length - 1 && 'mt-1']}>
+            {i === lines.length - 1 ? <span class="mark">{l}</span> : l}
+          </span>
+        ))
+      }
+    </p>
+    <p class="mx-auto mt-10 max-w-md text-muted">Good systems start with good conversations.</p>
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <Button href="/contact" icon="dots" size="lg">Let's talk</Button>
+      <Button href={`mailto:${site.email}`} variant="secondary" size="lg" icon="none">{site.email}</Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .philosophy .line {
+      opacity: 0;
+      filter: blur(6px);
+      transform: translateY(0.2em);
+      transition:
+        opacity 800ms var(--ease-out-soft),
+        filter 800ms var(--ease-out-soft),
+        transform 900ms var(--ease-out-soft);
+    }
+    :global(.js) .philosophy.is-revealed .line {
+      opacity: 1;
+      filter: none;
+      transform: none;
+    }
+    .philosophy .line:nth-child(2) { transition-delay: 220ms; }
+    .philosophy .line:nth-child(3) { transition-delay: 440ms; }
+    .philosophy .line:nth-child(4) { transition-delay: 660ms; }
+    /* The paragraph itself should not fade: its lines do. */
+    :global(.js) .philosophy[data-reveal] {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

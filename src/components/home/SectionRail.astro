@@ -1,0 +1,58 @@
+---
+/** Left-edge progress rail for the homepage sections (wide screens only). */
+const sections = [
+  { id: 'home', label: 'Home' },
+  { id: 'work', label: 'Work' },
+  { id: 'writing', label: 'Writing' },
+  { id: 'about', label: 'About' },
+  { id: 'capabilities', label: 'Capabilities' },
+];
+---
+
+<nav aria-label="Page sections" class="rail fixed top-1/2 left-4 z-30 hidden -translate-y-1/2 xl:block">
+  <ul class="flex flex-col gap-2.5">
+    {
+      sections.map((s, i) => (
+        <li>
+          <a href={`#${s.id}`} class="group flex h-3 items-center gap-3" data-rail={s.id} aria-current={i === 0 ? 'true' : undefined}>
+            <span class="dash block h-px bg-ink transition-[width] duration-500 ease-[var(--ease-out-soft)]" />
+            <span class="text-xs text-muted opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+              {s.label}
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  .rail .dash {
+    width: 0.75rem;
+  }
+  .rail li:nth-child(2) .dash { width: 1.1rem; }
+  .rail li:nth-child(3) .dash { width: 0.9rem; }
+  .rail li:nth-child(4) .dash { width: 1.25rem; }
+  .rail [aria-current] .dash {
+    width: 2.25rem !important;
+  }
+</style>
+
+<script>
+  const links = new Map(
+    [...document.querySelectorAll<HTMLAnchorElement>('[data-rail]')].map((a) => [a.dataset.rail!, a]),
+  );
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        links.forEach((a, id) => (id === e.target.id ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current')));
+      });
+    },
+    { rootMargin: '-45% 0px -50% 0px' },
+  );
+  links.forEach((_, id) => {
+    const el = document.getElementById(id);
+    if (el) io.observe(el);
+  });
+</script>

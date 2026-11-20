@@ -1,0 +1,125 @@
+---
+import { nav, site } from '@/config/site';
+import Logo from '@/components/ui/Logo.astro';
+import Icon from '@/components/ui/Icon.astro';
+import Dots from '@/components/ui/Dots.astro';
+
+const path = Astro.url.pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/';
+const isActive = (href: string) => (href === '/' ? path === '/' : path === href || path.startsWith(`${href}/`));
+const links = nav.filter((n) => n.href !== '/contact');
+const contactActive = isActive('/contact');
+---
+
+<header class="site-header pointer-events-none fixed inset-x-0 top-3 z-50 md:top-5" data-header>
+  <div class="mx-auto flex max-w-[96rem] items-center justify-between gap-2 px-3 md:px-6">
+    <a
+      href="/"
+      class="pointer-events-auto -m-1 flex h-11 items-center rounded-xl p-1"
+      aria-label={`${site.brand}, home`}
+    >
+      <Logo variant="icon" class="size-10 text-yellow lg:hidden" />
+      <Logo class="hidden h-9 w-auto text-ink lg:block" />
+    </a>
+
+    <div class="flex items-center gap-2 md:absolute md:left-1/2 md:-translate-x-1/2">
+      <nav aria-label="Main" class="glass pointer-events-auto rounded-full p-1">
+        <ul class="flex items-center">
+          {
+            links.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  aria-current={isActive(item.href) ? 'page' : undefined}
+                  class="nav-link flex h-9 items-center rounded-full px-2.5 text-sm font-medium text-muted transition-colors hover:text-ink aria-[current=page]:bg-surface aria-[current=page]:text-ink aria-[current=page]:shadow-[var(--shadow-soft)]"
+                >
+                  <Icon name={item.icon} class="size-[1.05rem] shrink-0" />
+                  <span class="nav-label">{item.label}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <a
+        href="/contact"
+        aria-current={contactActive ? 'page' : undefined}
+        class="group pointer-events-auto flex h-11 items-center gap-2.5 rounded-full bg-ink p-1.5 font-semibold text-paper shadow-[var(--shadow-float)] transition-transform duration-300 ease-[var(--ease-spring)] hover:scale-[1.03] aria-[current=page]:ring-2 aria-[current=page]:ring-yellow sm:pr-5"
+      >
+        <Dots class="size-8" />
+        <span class="max-sm:sr-only">Let's talk</span>
+      </a>
+    </div>
+
+    <button
+      type="button"
+      class="glass pointer-events-auto grid size-11 place-items-center rounded-full text-ink"
+      aria-pressed="false"
+      data-theme-toggle
+    >
+      <span class="sr-only">Dark mode</span>
+      <Icon name="moon" class="size-[1.1rem] dark:hidden" />
+      <Icon name="sun" class="hidden size-[1.1rem] dark:block" />
+    </button>
+  </div>
+</header>
+
+<style>
+  .nav-link {
+    gap: 0;
+    transition:
+      gap 400ms var(--ease-out-soft),
+      color 150ms,
+      background-color 150ms;
+  }
+  /* Labels stay in the accessibility tree; they are only visually collapsed. */
+  .nav-label {
+    display: inline-block;
+    max-width: 0;
+    overflow: hidden;
+    opacity: 0;
+    white-space: nowrap;
+    transition:
+      max-width 450ms var(--ease-out-soft),
+      opacity 250ms;
+  }
+  @media (min-width: 48rem) {
+    .site-header[data-expanded] .nav-link,
+    .site-header nav:hover .nav-link,
+    .site-header nav:focus-within .nav-link {
+      gap: 0.4rem;
+      padding-inline: 0.85rem;
+    }
+    .site-header[data-expanded] .nav-label,
+    .site-header nav:hover .nav-label,
+    .site-header nav:focus-within .nav-label {
+      max-width: 7rem;
+      opacity: 1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-link,
+    .nav-label {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  const onScroll = () => header?.toggleAttribute('data-expanded', window.scrollY > 120);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  const toggle = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  const sync = () => toggle?.setAttribute('aria-pressed', String(document.documentElement.classList.contains('dark')));
+  sync();
+  toggle?.addEventListener('click', () => {
+    const dark = document.documentElement.classList.toggle('dark');
+    try {
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+    } catch {}
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#111111' : '#f8f8f8');
+    sync();
+  });
+</script>

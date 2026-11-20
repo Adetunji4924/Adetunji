@@ -1,0 +1,14 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Button from '@/components/ui/Button.astro';
+import StatusPage from '@/components/ui/StatusPage.astro';
+---
+
+<BaseLayout title="Page not found" description="This page doesn't exist." noindex>
+  <StatusPage label="Error 404">
+    <Fragment slot="title">This page isn't part of the <span class="mark">system.</span></Fragment>
+    <Fragment slot="lead">The link may be old or mistyped. Here's where you can go instead.</Fragment>
+    <Button href="/" icon="dots">Back home</Button>
+    <Button href="/work" variant="secondary">See the work</Button>
+  </StatusPage>
+</BaseLayout>

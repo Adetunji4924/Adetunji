@@ -1,0 +1,27 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import type { Work } from '@/lib/content';
+
+export interface Props {
+  items: Work['data']['highlights'];
+  class?: string;
+}
+const { items, class: className = '' } = Astro.props;
+const cols = { 1: 'lg:grid-cols-1', 2: 'lg:grid-cols-2', 3: 'lg:grid-cols-3', 4: 'lg:grid-cols-4' } as const;
+---
+
+{
+  items.length > 0 && (
+    <ul class:list={['grid gap-3 sm:grid-cols-2', cols[items.length as 1 | 2 | 3 | 4], className]}>
+      {items.map((h, i) => (
+        <li class="card flex flex-col p-6 sm:min-h-48" data-reveal={String(i)}>
+          <Icon name={h.icon} class="size-5 text-muted" />
+          <div class="mt-auto pt-5 sm:pt-10">
+            <p class="text-sm font-medium text-muted">{h.title}</p>
+            <p class="mt-2 text-sm leading-relaxed sm:min-h-[4.5em]">{h.text}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  )
+}

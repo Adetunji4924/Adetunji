@@ -1,0 +1,326 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter/index.css';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------
+   Design tokens: brand palette
+   Acid Yellow #F0F000 · Near Black #111111 · Off White #F8F8F8 · Light Grey #E0E0E0
+   Semantic tokens (ink, paper, …) flip in dark mode; `.on-dark` pins a
+   panel to the dark look in both themes.
+   Contrast (WCAG 2.2), light: ink/paper 17.9:1 · muted/paper 6.3:1 ·
+   muted/paper-2 5.6:1 · ink/yellow 15.4:1 · yellow on paper never used as text.
+   Dark: paper-on-ink 17.9:1 · muted/paper 7.5:1 · muted/paper-2 6.8:1.
+------------------------------------------------------------------- */
+@theme {
+  --color-ink: #111111;
+  --color-ink-2: #1e1e1e;
+  --color-paper: #f8f8f8;
+  --color-paper-2: #eeeeee;
+  --color-surface: #ffffff;
+  --color-line: #e0e0e0;
+  --color-line-strong: #8a8a8a;
+  --color-muted: #5e5e5e;
+  --color-muted-dark: #a3a3a3;
+  --color-yellow: #f0f000;
+  --color-night: #111111;
+  --color-snow: #f8f8f8;
+
+  --font-display: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Fluid type scale (min @ 360px → max @ 1440px) */
+  --text-eyebrow: 0.8125rem;
+  --text-body: clamp(1rem, 0.97rem + 0.12vw, 1.0625rem);
+  --text-lead: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  --text-h4: clamp(1.125rem, 1.05rem + 0.3vw, 1.3125rem);
+  --text-h3: clamp(1.375rem, 1.2rem + 0.7vw, 1.875rem);
+  --text-h2: clamp(1.75rem, 1.4rem + 1.5vw, 2.75rem);
+  --text-h1: clamp(2.125rem, 1.6rem + 2.3vw, 3.75rem);
+  --text-display: clamp(2.5rem, 1.7rem + 3.6vw, 5rem);
+  --text-mega: clamp(3rem, 1.6rem + 6.2vw, 7.5rem);
+
+  --breakpoint-xs: 26rem;
+  --container-measure: 40rem;
+  --container-site: 76rem;
+
+  --radius-card: 1.5rem;
+  --shadow-float: 0 10px 40px -10px rgb(0 0 0 / 0.22), inset 0 1px 0 rgb(255 255 255 / 0.6);
+  --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.06), 0 8px 24px -12px rgb(0 0 0 / 0.18);
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+/* Dark theme: the same tokens, flipped */
+.dark {
+  --color-ink: #f8f8f8;
+  --color-ink-2: #e6e6e6;
+  --color-paper: #111111;
+  --color-paper-2: #1b1b1b;
+  --color-surface: #232323;
+  --color-line: #2c2c2c;
+  --color-line-strong: #6e6e6e;
+  --color-muted: #a3a3a3;
+  --shadow-float: 0 10px 40px -10px rgb(0 0 0 / 0.7), inset 0 1px 0 rgb(255 255 255 / 0.08);
+  --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -12px rgb(0 0 0 / 0.6);
+  color-scheme: dark;
+}
+
+/* Panels that are dark in both themes */
+.on-dark {
+  --color-ink: #111111;
+  --color-ink-2: #1e1e1e;
+  --color-paper: #f8f8f8;
+  --color-line: #2c2c2c;
+}
+
+/* ------------------------------------------------------------------
+   Base
+------------------------------------------------------------------- */
+@layer base {
+  html {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-padding-top: 6rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    font-size: var(--text-body);
+    line-height: 1.6;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-yellow);
+    color: #111111;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-ink);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .on-dark :focus-visible,
+  .on-dark:focus-visible {
+    outline-color: var(--color-yellow);
+  }
+
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+
+  img,
+  svg,
+  video {
+    display: block;
+    max-width: 100%;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Components
+------------------------------------------------------------------- */
+@layer components {
+  .container-site {
+    width: 100%;
+    max-width: var(--container-site);
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 3rem);
+  }
+
+  /* Logo: the tile takes --logo-tile (yellow by default), the letters currentColor */
+  .logo-tile {
+    fill: var(--logo-tile, currentColor);
+  }
+  .logo-text {
+    fill: currentColor;
+  }
+
+  /* Frosted floating chrome (nav pill, theme toggle) */
+  .glass {
+    background: color-mix(in srgb, var(--color-surface) 55%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-surface) 60%, transparent);
+    box-shadow: var(--shadow-float);
+    backdrop-filter: blur(16px) saturate(1.4);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  }
+
+  /* Soft grey card, the main surface of the layout */
+  .card {
+    background: var(--color-paper-2);
+    border-radius: var(--radius-card);
+  }
+  .card-inner {
+    background: var(--color-surface);
+    border-radius: calc(var(--radius-card) - 0.5rem);
+  }
+
+  /* Hairline frame lines that run the height of the content column */
+  .frame {
+    border-inline: 1px solid var(--color-line);
+  }
+  .frame-rule {
+    position: relative;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: var(--text-eyebrow);
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+
+  /* Yellow highlighter behind ink text: the brand's main accent gesture */
+  .mark {
+    background-image: linear-gradient(var(--color-yellow), var(--color-yellow));
+    background-repeat: no-repeat;
+    background-size: 100% 0.42em;
+    background-position: 0 88%;
+    padding-inline: 0.04em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    color: #111111;
+  }
+  .dark .mark {
+    color: #111111;
+  }
+
+  .link-underline {
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25em;
+    transition: text-decoration-thickness 150ms;
+  }
+  .link-underline:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  /* Long-form reading (case studies, articles) */
+  .prose-editorial {
+    max-width: var(--container-measure);
+    font-size: var(--text-lead);
+    line-height: 1.65;
+  }
+  .prose-editorial > * + * {
+    margin-top: 1.1em;
+  }
+  .prose-editorial h2 {
+    font-size: var(--text-h3);
+    margin-top: 2.4em;
+    margin-bottom: 0.2em;
+  }
+  .prose-editorial h3 {
+    font-size: var(--text-h4);
+    margin-top: 1.8em;
+  }
+  .prose-editorial a {
+    text-decoration-line: underline;
+    text-underline-offset: 0.2em;
+  }
+  .prose-editorial ul,
+  .prose-editorial ol {
+    padding-left: 1.2em;
+  }
+  .prose-editorial ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  .prose-editorial ul > li {
+    position: relative;
+    padding-left: 1.4em;
+  }
+  .prose-editorial ul > li + li,
+  .prose-editorial ol > li + li {
+    margin-top: 0.5em;
+  }
+  .prose-editorial ul > li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.68em;
+    width: 0.6em;
+    height: 2px;
+    background: currentColor;
+  }
+  .prose-editorial ol {
+    list-style: decimal;
+  }
+  .prose-editorial strong {
+    font-weight: 600;
+  }
+  .prose-editorial blockquote {
+    font-size: var(--text-h4);
+    line-height: 1.3;
+    border-left: 4px solid var(--color-yellow);
+    padding-left: 1em;
+    margin-block: 2em;
+  }
+  .prose-editorial code {
+    font-size: 0.88em;
+    background: var(--color-paper-2);
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+  }
+  .prose-editorial figure {
+    margin-block: 2.5em;
+  }
+  .prose-editorial figcaption {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    margin-top: 0.75em;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Motion: content is visible without JS; the `js` class (set inline in
+   <head>) opts in to reveal animations, and reduced-motion opts out.
+------------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(1.25rem);
+    transition:
+      opacity 700ms var(--ease-out-soft),
+      transform 900ms var(--ease-out-soft);
+  }
+  .js [data-reveal='1'] { transition-delay: 90ms; }
+  .js [data-reveal='2'] { transition-delay: 180ms; }
+  .js [data-reveal='3'] { transition-delay: 270ms; }
+  .js [data-reveal='4'] { transition-delay: 360ms; }
+  .js [data-reveal].is-revealed {
+    opacity: 1;
+    transform: none;
+  }
+}

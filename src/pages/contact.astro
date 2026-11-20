@@ -1,0 +1,70 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageIntro from '@/components/ui/PageIntro.astro';
+import ContactForm from '@/components/forms/ContactForm.astro';
+import Dots from '@/components/ui/Dots.astro';
+import { site, socials } from '@/config/site';
+import { webPageSchema, breadcrumbSchema } from '@/lib/schema';
+import { canonicalUrl } from '@/lib/url';
+---
+
+<BaseLayout
+  title="Contact Adetunji Adewole"
+  description="Get in touch with Adetunji Adewole about a project, an opportunity, a role or an idea worth exploring."
+  jsonLd={[
+    webPageSchema({ url: canonicalUrl(Astro.url, Astro.site), base: Astro.site, name: 'Contact Adetunji Adewole', description: 'Get in touch with Adetunji Adewole.', type: 'ContactPage' }),
+    breadcrumbSchema(Astro.site, [{ name: 'Contact', path: '/contact' }]),
+  ]}
+>
+  <PageIntro
+    eyebrow="Contact"
+    title="Let's talk."
+    lead="A project, an opportunity or an idea worth exploring: send a note and I'll get back to you."
+  />
+
+  <section class="container-site grid gap-3 pb-16 md:pb-24 lg:grid-cols-[1.5fr_1fr]" aria-label="Contact options">
+    <div class="card p-5 md:p-10" data-reveal>
+      <h2 class="text-[length:var(--text-h3)]">Send a message</h2>
+      <div class="mt-8">
+        <ContactForm />
+      </div>
+    </div>
+
+    <aside class="flex flex-col gap-3" aria-label="Other ways to reach me">
+      <div class="on-dark relative overflow-hidden rounded-[var(--radius-card)] bg-night p-6 text-snow md:p-8 dark:ring-1 dark:ring-white/10" data-reveal="1">
+        <div class="flex items-center gap-3">
+          <Dots class="size-9" />
+          <h2 class="text-sm font-medium text-muted-dark">Email me directly</h2>
+        </div>
+        <a href={`mailto:${site.email}`} class="mt-6 block text-xl leading-snug font-medium hover:underline md:text-2xl">
+          {site.email.split('@')[0]}@<wbr />{site.email.split('@')[1]}
+        </a>
+      </div>
+
+      <div class="card flex-1 p-3" data-reveal="2">
+        <h2 class="px-3 pt-3 text-sm font-medium text-muted">Elsewhere</h2>
+        <ul class="mt-3 space-y-1.5">
+          {
+            socials.map((s) => (
+              <li>
+                <a
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer me"
+                  class="card-inner group flex items-center justify-between px-4 py-3.5 transition-shadow hover:shadow-[var(--shadow-soft)]"
+                >
+                  <span class="font-medium">{s.label}</span>
+                  <span class="text-sm text-muted">
+                    {s.handle}
+                    <span aria-hidden="true" class="ml-1 inline-block transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
+                    <span class="sr-only"> (opens in a new tab)</span>
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </aside>
+  </section>
+</BaseLayout>

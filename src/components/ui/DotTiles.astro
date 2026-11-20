@@ -1,0 +1,120 @@
+---
+/**
+ * Four tiles, one per philosophy word, each a field of dots that swells toward the
+ * pointer and breathes slowly when idle (static under reduced motion).
+ */
+export interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+const tiles = [
+  { word: 'Technology', line: 'Building technology.', span: 'md:row-span-2' },
+  { word: 'Problems', line: 'Solving problems.', span: '' },
+  { word: 'People', line: 'Understanding people.', span: '' },
+  { word: 'Value', line: 'Creating value.', span: 'md:col-span-2', accent: true },
+];
+---
+
+<div class={className}>
+    <ul class="grid auto-rows-[11rem] gap-3 md:grid-cols-3 md:auto-rows-[12.5rem]" aria-label="What I work towards">
+      {
+        tiles.map((t, i) => (
+          <li
+            class:list={[
+              'dot-tile relative overflow-hidden rounded-[var(--radius-card)]',
+              t.accent ? 'on-dark bg-yellow text-night' : 'bg-paper-2 text-ink',
+              t.span,
+            ]}
+            data-reveal={String(i)}
+          >
+            <canvas class="absolute inset-0 size-full" data-dotfield aria-hidden="true" />
+            <div class="relative flex h-full flex-col justify-end p-6">
+              <p class="text-[length:var(--text-h3)] leading-none font-medium tracking-tight">{t.word}</p>
+              <p class:list={['mt-2 text-sm', t.accent ? 'text-night/75' : 'text-muted']}>{t.line}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+</div>
+
+<script>
+  // Dot fields that swell toward the pointer and breathe slowly when idle.
+  type Field = { canvas: HTMLCanvasElement; ctx: CanvasRenderingContext2D; w: number; h: number; px: number; py: number; active: boolean; visible: boolean };
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fields: Field[] = [];
+  const GAP = 11;
+
+  const size = (f: Field) => {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const r = f.canvas.getBoundingClientRect();
+    f.w = r.width;
+    f.h = r.height;
+    f.canvas.width = Math.round(r.width * dpr);
+    f.canvas.height = Math.round(r.height * dpr);
+    f.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  };
+
+  const draw = (f: Field, t: number) => {
+    const { ctx, w, h } = f;
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = getComputedStyle(f.canvas).color;
+    const cx = f.active ? f.px : w / 2 + Math.cos(t / 2400) * w * 0.18;
+    const cy = f.active ? f.py : h / 2 + Math.sin(t / 3100) * h * 0.18;
+    const reach = Math.min(w, h) * 0.55;
+    for (let y = GAP / 2; y < h; y += GAP) {
+      for (let x = GAP / 2; x < w; x += GAP) {
+        const d = Math.hypot(x - cx, y - cy);
+        const k = Math.max(0, 1 - d / reach);
+        const r = 0.55 + k * k * 1.9;
+        ctx.globalAlpha = 0.18 + k * 0.62;
+        const push = k * k * 4;
+        const ang = Math.atan2(y - cy, x - cx);
+        ctx.beginPath();
+        ctx.arc(x + Math.cos(ang) * push, y + Math.sin(ang) * push, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+    ctx.globalAlpha = 1;
+  };
+
+  document.querySelectorAll<HTMLCanvasElement>('[data-dotfield]').forEach((canvas) => {
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    const f: Field = { canvas, ctx, w: 0, h: 0, px: 0, py: 0, active: false, visible: false };
+    size(f);
+    fields.push(f);
+    const host = canvas.parentElement!;
+    host.addEventListener('pointermove', (e) => {
+      const r = canvas.getBoundingClientRect();
+      f.px = e.clientX - r.left;
+      f.py = e.clientY - r.top;
+      f.active = true;
+      if (reduce) draw(f, 0);
+    });
+    host.addEventListener('pointerleave', () => {
+      f.active = false;
+      if (reduce) draw(f, 0);
+    });
+    new ResizeObserver(() => {
+      size(f);
+      draw(f, performance.now());
+    }).observe(canvas);
+    new IntersectionObserver(([e]) => (f.visible = !!e?.isIntersecting)).observe(canvas);
+    draw(f, 0);
+  });
+
+  // Redraw when the theme changes (dot colour follows the text colour).
+  new MutationObserver(() => fields.forEach((f) => draw(f, performance.now()))).observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class'],
+  });
+
+  if (!reduce && fields.length) {
+    const loop = (t: number) => {
+      fields.forEach((f) => f.visible && draw(f, t));
+      requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
+  }
+</script>

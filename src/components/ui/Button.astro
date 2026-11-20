@@ -1,0 +1,53 @@
+---
+import Dots from '@/components/ui/Dots.astro';
+
+export interface Props {
+  href: string;
+  variant?: 'primary' | 'secondary' | 'accent' | 'ink' | 'ghost-dark';
+  size?: 'md' | 'lg';
+  /** `arrow` (default), `dots` (the yellow talk disc, leading) or `none`. */
+  icon?: 'arrow' | 'dots' | 'none';
+  class?: string;
+  external?: boolean;
+}
+const { href, variant = 'primary', size = 'md', icon = 'arrow', class: className = '', external = false } = Astro.props;
+
+const variants = {
+  primary: 'bg-ink text-paper shadow-[var(--shadow-soft)] hover:bg-ink-2',
+  ink: 'bg-ink text-paper shadow-[var(--shadow-soft)] hover:bg-ink-2',
+  secondary: 'bg-surface text-ink ring-1 ring-line shadow-[var(--shadow-soft)] hover:ring-line-strong',
+  // Near black on acid yellow: 15.4:1
+  accent: 'bg-yellow text-night shadow-[var(--shadow-soft)] hover:brightness-95',
+  'ghost-dark': 'bg-transparent text-snow ring-1 ring-snow/40 hover:bg-snow hover:text-night',
+};
+const sizes = { md: 'h-11 text-sm', lg: 'h-12 text-[0.9375rem]' };
+const pad = icon === 'dots' ? 'pl-1.5 pr-5' : size === 'lg' ? 'px-6' : 'px-5';
+---
+
+<a
+  href={href}
+  class:list={[
+    'group inline-flex items-center gap-2.5 rounded-full font-medium transition-[transform,background-color,box-shadow] duration-300 ease-[var(--ease-spring)] hover:-translate-y-0.5 active:translate-y-0',
+    variants[variant],
+    sizes[size],
+    pad,
+    className,
+  ]}
+  {...external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+>
+  {icon === 'dots' && <Dots class={size === 'lg' ? 'size-9' : 'size-8'} />}
+  <slot />
+  {
+    icon === 'arrow' && (
+      <svg
+        class="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        viewBox="0 0 16 16"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path d="M4 12 12 4M5.5 4H12v6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    )
+  }
+  {external && <span class="sr-only">(opens in a new tab)</span>}
+</a>

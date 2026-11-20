@@ -1,0 +1,14 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Button from '@/components/ui/Button.astro';
+import StatusPage from '@/components/ui/StatusPage.astro';
+---
+
+<BaseLayout title="Message sent" description="Thanks for getting in touch." noindex>
+  <StatusPage label="Contact">
+    <Fragment slot="title">Thank you. <span class="mark">Message received.</span></Fragment>
+    <Fragment slot="lead">I'll get back to you soon.</Fragment>
+    <Button href="/work" icon="dots">Explore the work</Button>
+    <Button href="/" variant="secondary">Back home</Button>
+  </StatusPage>
+</BaseLayout>

@@ -1,0 +1,34 @@
+---
+import { webPageSchema, breadcrumbSchema } from '@/lib/schema';
+import { canonicalUrl } from '@/lib/url';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageIntro from '@/components/ui/PageIntro.astro';
+import WorkShowcase from '@/components/home/WorkShowcase.astro';
+import Gallery from '@/components/home/Gallery.astro';
+import CtaCard from '@/components/ui/CtaCard.astro';
+import Button from '@/components/ui/Button.astro';
+---
+
+<BaseLayout
+  title="Work & Case Studies"
+  description="Case studies by Adetunji Adewole: Vehtriq fleet intelligence, the Equalsphere inclusion platform and a commission platform, plus development and design work."
+  jsonLd={[
+    webPageSchema({ url: canonicalUrl(Astro.url, Astro.site), base: Astro.site, name: 'Work by Adetunji Adewole', description: 'Projects and case studies by Adetunji Adewole.', type: 'CollectionPage' }),
+    breadcrumbSchema(Astro.site, [{ name: 'Work', path: '/work' }]),
+  ]}
+>
+  <PageIntro
+    eyebrow="Work"
+    title="Selected work"
+    lead="Systems, products and the thinking behind them. Each project shows my role and its real status, and opens into the full story."
+  >
+    <Button href="#work" icon="none" variant="secondary">Browse projects</Button>
+    <Button href="/contact" icon="dots">Start a conversation</Button>
+  </PageIntro>
+
+  <WorkShowcase title="All projects." archiveDetail />
+  <Gallery />
+  <div class="frame-rule pt-16 md:pt-24">
+    <CtaCard title="Want to talk about this work?" />
+  </div>
+</BaseLayout>

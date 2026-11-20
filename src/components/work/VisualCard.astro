@@ -1,0 +1,49 @@
+---
+/** The dark showcase card: project visual on top, name, category and status below. */
+import ProjectVisual from '@/components/work/ProjectVisual.astro';
+import StatusPill from '@/components/work/StatusPill.astro';
+import type { Work } from '@/lib/content';
+import { categories } from '@/content.config';
+
+export interface Props {
+  project: Work;
+  /** Makes the whole card a (decorative, duplicate) link. */
+  href?: string;
+  priority?: boolean;
+  sizes?: string;
+  class?: string;
+}
+const { project: w, href, priority = false, sizes = '(min-width: 64rem) 40vw, 100vw', class: className = '' } = Astro.props;
+const Tag = href ? 'a' : 'div';
+const linkAttrs = href ? { href, tabindex: -1, 'aria-hidden': 'true' as const } : {};
+---
+
+<Tag
+  {...linkAttrs}
+  class:list={['visual-card on-dark group relative flex flex-col overflow-hidden rounded-[var(--radius-card)] bg-night p-3 text-snow dark:ring-1 dark:ring-white/10', className]}
+>
+  <ProjectVisual
+    project={w}
+    priority={priority}
+    sizes={sizes}
+    class="rounded-[1.1rem] ring-1 ring-white/10 transition-transform duration-700 ease-[var(--ease-out-soft)] group-hover:scale-[1.015]"
+  />
+  <div class="relative mt-auto flex items-end justify-between gap-4 px-2 pt-6 pb-1 text-sm">
+    <div>
+      <p class="font-semibold">{w.data.title}</p>
+      <p class="mt-1 text-muted-dark">{categories[w.data.category]}</p>
+    </div>
+    <StatusPill kind={w.data.statusKind} label={w.data.status} dark />
+  </div>
+</Tag>
+
+<style>
+  .visual-card::before {
+    content: '';
+    position: absolute;
+    inset: auto -20% -40% -20%;
+    height: 70%;
+    background: radial-gradient(closest-side, rgb(240 240 0 / 0.16), transparent);
+    pointer-events: none;
+  }
+</style>

@@ -1,0 +1,112 @@
+---
+/**
+ * Writing. Shows real articles when there are any; otherwise the topics in
+ * progress, clearly labelled. Never implies an article exists when it doesn't.
+ */
+import Button from '@/components/ui/Button.astro';
+import { getArticles, formatDate } from '@/lib/content';
+
+export interface Props {
+  /** Homepage shows the section heading and the 3 latest; the Writing page shows all, under its own h1. */
+  heading?: boolean;
+  limit?: number;
+}
+const { heading = true, limit = 3 } = Astro.props;
+const articles = (await getArticles()).slice(0, limit);
+// Cards sit under the section h2 on the homepage, directly under the page h1 on /writing.
+const CardHeading = heading ? 'h3' : 'h2';
+const planned = [
+  { title: 'Engineering & architecture', line: 'Structure, trade-offs, and building systems that stay understandable as they grow.' },
+  { title: 'AI & technology', line: 'What AI changes about how products are designed, built and run.' },
+  { title: 'Product & leadership', line: 'Choosing what to build, and leading the people who build it.' },
+];
+const cards =
+  articles.length > 0
+    ? articles.map((a) => ({
+        title: a.data.title,
+        line: a.data.excerpt,
+        meta: `${a.data.topic} · ${formatDate(a.data.date)}`,
+        href: `/writing/${a.id}`,
+      }))
+    : planned.map((p) => ({ ...p, meta: 'Essay in progress', href: undefined }));
+
+// A sphere of dots, projected once at build time.
+const dots = Array.from({ length: 140 }, (_, i) => {
+  const y = 1 - (i / 139) * 2;
+  const r = Math.sqrt(1 - y * y);
+  const t = i * 2.399963;
+  const z = Math.sin(t) * r;
+  return { x: 50 + Math.cos(t) * r * 26, y: 50 + y * 26, o: (0.25 + (z + 1) * 0.35).toFixed(2), s: (0.5 + (z + 1) * 0.35).toFixed(2) };
+});
+---
+
+<section
+  id={heading ? 'writing' : undefined}
+  data-section={heading ? 'Writing' : undefined}
+  aria-labelledby={heading ? 'writing-title' : undefined}
+  aria-label={heading ? undefined : articles.length ? 'Articles' : 'Essays in progress'}
+  class:list={[heading && 'frame-rule']}
+>
+  <div class:list={['container-site', heading ? 'py-16 md:py-24' : 'pb-16 md:pb-24']}>
+    {
+      heading && (
+        <>
+          <div class="flex flex-wrap items-end justify-between gap-4">
+            <h2 id="writing-title" class="text-[length:var(--text-h2)]">Writing.</h2>
+            <a href="/writing" class="link-underline text-sm font-medium">All writing</a>
+          </div>
+          {articles.length === 0 && (
+            <p class="mt-4 max-w-xl text-muted">Writing is where I think out loud. The first essays are in progress.</p>
+          )}
+        </>
+      )
+    }
+
+    <ul class:list={['grid gap-6 md:grid-cols-3', heading && 'mt-10']}>
+      {
+        cards.map((c, i) => (
+          <li class="group flex flex-col" data-reveal={String(i)}>
+            <div class="on-dark relative aspect-[16/10] overflow-hidden rounded-[var(--radius-card)] bg-night dark:ring-1 dark:ring-white/12">
+              <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" class="sphere absolute inset-0 size-full text-snow" aria-hidden="true">
+                {dots.map((d) => <circle cx={d.x} cy={d.y} r={d.s} fill="currentColor" opacity={d.o} />)}
+              </svg>
+              <span class="absolute top-3 left-3 rounded-full bg-white/10 px-3 py-1 text-xs text-snow backdrop-blur">{c.meta}</span>
+            </div>
+            <CardHeading class="mt-5 text-[length:var(--text-h4)]">{c.title}</CardHeading>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{c.line}</p>
+            {c.href && (
+              <div class="mt-5">
+                <Button href={c.href} variant="secondary" size="md">
+                  Read<span class="sr-only">: {c.title}</span>
+                </Button>
+              </div>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    .sphere {
+      transform-origin: 50% 50%;
+      animation: breathe 7s ease-in-out infinite;
+    }
+    li:nth-child(2) .sphere {
+      animation-delay: -2.3s;
+    }
+    li:nth-child(3) .sphere {
+      animation-delay: -4.6s;
+    }
+    .group:hover .sphere {
+      animation-duration: 2.5s;
+    }
+  }
+  @keyframes breathe {
+    50% {
+      transform: scale(1.12) rotate(18deg);
+    }
+  }
+</style>

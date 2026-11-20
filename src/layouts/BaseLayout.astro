@@ -1,0 +1,82 @@
+---
+import '@/styles/global.css';
+import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import Seo, { type Props as SeoProps } from '@/components/layout/Seo.astro';
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+
+export type Props = SeoProps & { mainClass?: string };
+const { mainClass = '', ...seo } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f8f8f8" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add('js');
+        var t = null;
+        try { t = localStorage.getItem('theme'); } catch (e) {}
+        if (t === 'dark' || (!t && matchMedia('(prefers-color-scheme: dark)').matches)) {
+          d.classList.add('dark');
+          var m = document.querySelector('meta[name="theme-color"]');
+          if (m) m.setAttribute('content', '#111111');
+        }
+      })();
+    </script>
+    <Seo {...seo} />
+  </head>
+  <body>
+    <a
+      href="#main"
+      data-skip-link
+      class="fixed top-3 left-3 z-[60] -translate-y-24 rounded-full bg-ink px-5 py-3 text-sm font-semibold text-paper focus:translate-y-0"
+      >Skip to content</a
+    >
+    <div class="top-fade pointer-events-none fixed inset-x-0 top-0 z-40 h-20 md:h-28" aria-hidden="true"></div>
+    <Header />
+    <main id="main" tabindex="-1" class:list={['flex-1 pt-20 outline-none md:pt-24', mainClass]}>
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      // Reveal-on-scroll. CSS only hides [data-reveal] when JS runs and motion is allowed.
+      const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const io = new IntersectionObserver(
+          (entries) =>
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add('is-revealed');
+                io.unobserve(e.target);
+              }
+            }),
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+        );
+        els.forEach((el) => io.observe(el));
+      } else {
+        els.forEach((el) => el.classList.add('is-revealed'));
+      }
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  /* Content softens and blurs as it slides under the floating nav. */
+  .top-fade {
+    background: linear-gradient(var(--color-paper) 15%, transparent);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    mask-image: linear-gradient(#000 35%, transparent);
+    -webkit-mask-image: linear-gradient(#000 35%, transparent);
+  }
+</style>

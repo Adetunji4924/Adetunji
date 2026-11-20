@@ -1,0 +1,70 @@
+---
+import { nav, site, socials } from '@/config/site';
+import Logo from '@/components/ui/Logo.astro';
+
+const year = new Date().getFullYear();
+const contact = [{ label: 'Email', href: `mailto:${site.email}`, external: false }, ...socials.map((s) => ({ label: s.label, href: s.href, external: true }))];
+---
+
+<footer class="mt-auto overflow-hidden border-t border-line">
+  <div class="container-site pt-20 md:pt-28">
+    <div class="grid gap-12 md:grid-cols-12">
+      <div class="md:col-span-6">
+        <a href="/" aria-label={`${site.brand}, home`} class="inline-block">
+          <Logo class="h-10 w-auto text-ink" />
+        </a>
+        <p class="mt-5 text-sm text-muted"><span class="text-ink">{site.name}</span> · {site.descriptor.join(' · ')}</p>
+        <a href={`mailto:${site.email}`} class="link-underline mt-6 inline-block text-[length:var(--text-h4)] font-medium break-all">
+          {site.email}
+        </a>
+      </div>
+
+      <nav aria-label="Footer" class="md:col-span-2 md:col-start-9">
+        <h2 class="text-sm font-medium text-muted">Menu</h2>
+        <ul class="mt-4 text-sm">
+          {
+            nav.map((item) => (
+              <li>
+                <a href={item.href} class="block border-b border-line py-1.5 hover:text-muted">
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div class="md:col-span-2">
+        <h2 class="text-sm font-medium text-muted">Contact</h2>
+        <ul class="mt-4 text-sm">
+          {
+            contact.map((c) => (
+              <li>
+                <a
+                  href={c.href}
+                  class="block border-b border-line py-1.5 hover:text-muted"
+                  {...(c.external ? { target: '_blank', rel: 'noopener noreferrer me' } : {})}
+                >
+                  {c.label}
+                  {c.external && <span class="sr-only"> (opens in a new tab)</span>}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <p class="mt-16 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center text-sm text-muted md:mt-20">
+      <span>Designed and built by <span lang="yo">{site.brand}</span></span>
+      <span aria-hidden="true">·</span>
+      <span>© {year} {site.name}</span>
+      <span aria-hidden="true">·</span>
+      <span>Globally minded, with an African perspective.</span>
+    </p>
+  </div>
+
+  <div aria-hidden="true" class="mt-10 -mb-[3.5vw] px-[1.5vw] select-none">
+    <Logo tile="current" class="h-auto w-full text-paper-2" />
+  </div>
+</footer>

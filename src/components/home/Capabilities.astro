@@ -1,0 +1,169 @@
+---
+/**
+ * Capabilities as a network: five areas, their skills, and the links between
+ * areas. Laid out at build time; floats gently; hovering an area lights it up.
+ * The SVG is decorative, and the same content is a plain list for assistive tech
+ * and small screens.
+ */
+import { capabilities } from '@/data/capabilities';
+
+const W = 1000;
+const H = 600;
+const hubs: [number, number][] = [
+  [230, 170],
+  [520, 110],
+  [800, 220],
+  [690, 470],
+  [300, 440],
+];
+// Deterministic pseudo-random for the background stars.
+let seed = 7;
+const rand = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+const stars = Array.from({ length: 70 }, () => ({ x: rand() * W, y: rand() * H, r: 0.8 + rand() * 1.4 }));
+
+const clusters = capabilities.map((c, i) => {
+  const [hx, hy] = hubs[i]!;
+  const items = c.items.map((label, j) => {
+    const a = (j / c.items.length) * Math.PI * 2 + i * 0.9;
+    return { label, x: hx + Math.cos(a) * 125, y: hy + Math.sin(a) * 78 };
+  });
+  return { ...c, hx, hy, items };
+});
+const links = clusters.flatMap((a, i) => clusters.slice(i + 1).map((b) => ({ a, b })));
+---
+
+<section id="capabilities" data-section="Capabilities" aria-labelledby="cap-title" class="frame-rule">
+  <div class="container-site py-16 md:py-24">
+    <h2 id="cap-title" class="text-[length:var(--text-h2)]">Capabilities.</h2>
+    <p class="mt-4 max-w-xl text-muted">
+      Five areas that feed each other. Hover one to see what sits inside it.
+    </p>
+
+    <ul class="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2 md:sr-only">
+      {
+        capabilities.map((c) => (
+          <li>
+            <h3 class="font-medium">{c.area}</h3>
+            <ul class="mt-2 space-y-1 text-sm text-muted">
+              {c.items.map((i) => <li>{i}</li>)}
+            </ul>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="mt-6 hidden md:block" aria-hidden="true" data-reveal>
+      <svg viewBox={`0 0 ${W} ${H}`} class="graph w-full text-ink">
+        <g class="text-line-strong">
+          {stars.map((s) => <circle cx={s.x} cy={s.y} r={s.r} fill="currentColor" opacity="0.5" class="star" />)}
+        </g>
+        <g class="text-line-strong">
+          {
+            links.map(({ a, b }) => (
+              <path
+                d={`M${a.hx},${a.hy} Q${(a.hx + b.hx) / 2},${(a.hy + b.hy) / 2 - 40} ${b.hx},${b.hy}`}
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1"
+                opacity="0.6"
+              />
+            ))
+          }
+        </g>
+        {
+          clusters.map((c, i) => (
+            <g class="cluster" data-i={i}>
+              <g class="drift">
+                {c.items.map((it) => (
+                  <line x1={c.hx} y1={c.hy} x2={it.x} y2={it.y} stroke="currentColor" stroke-width="1" class="spoke" />
+                ))}
+                {c.items.map((it) => (
+                  <g class="leaf">
+                    <circle cx={it.x} cy={it.y} r="5" fill="currentColor" />
+                    <text x={it.x} y={it.y + 22} text-anchor="middle" font-size="14" fill="currentColor" class="leaf-label">
+                      {it.label}
+                    </text>
+                  </g>
+                ))}
+                <circle cx={c.hx} cy={c.hy} r="30" class="hub-glow" />
+                <circle cx={c.hx} cy={c.hy} r="10" fill="currentColor" />
+                <text x={c.hx} y={c.hy - 22} text-anchor="middle" font-size="19" font-weight="600" fill="currentColor">
+                  {c.area}
+                </text>
+              </g>
+            </g>
+          ))
+        }
+      </svg>
+    </div>
+  </div>
+</section>
+
+<style>
+  .graph text {
+    paint-order: stroke;
+    stroke: var(--color-paper);
+    stroke-width: 5px;
+    stroke-linejoin: round;
+  }
+  .graph .spoke {
+    opacity: 0.35;
+    transition: opacity 300ms;
+  }
+  .graph .leaf-label {
+    opacity: 0.6;
+    transition: opacity 300ms;
+  }
+  .graph .hub-glow {
+    fill: var(--color-yellow);
+    opacity: 0;
+    transition: opacity 300ms;
+  }
+  .graph .cluster {
+    transition: opacity 300ms;
+  }
+  .graph:hover .cluster {
+    opacity: 0.3;
+  }
+  .graph .cluster:hover {
+    opacity: 1;
+  }
+  .graph .cluster:hover .spoke,
+  .graph .cluster:hover .leaf-label {
+    opacity: 1;
+  }
+  .graph .cluster:hover .hub-glow {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .drift {
+      animation: drift 9s ease-in-out infinite;
+    }
+    .cluster:nth-child(odd) .drift {
+      animation-duration: 11s;
+      animation-direction: reverse;
+    }
+    .cluster[data-i='2'] .drift {
+      animation-delay: -3s;
+    }
+    .cluster[data-i='4'] .drift {
+      animation-delay: -6s;
+    }
+    .star:nth-child(3n) {
+      animation: twinkle 4s ease-in-out infinite;
+    }
+    .star:nth-child(4n) {
+      animation: twinkle 6s ease-in-out infinite -2s;
+    }
+  }
+  @keyframes drift {
+    50% {
+      transform: translate(6px, -8px);
+    }
+  }
+  @keyframes twinkle {
+    50% {
+      opacity: 0.1;
+    }
+  }
+</style>

@@ -1,0 +1,52 @@
+---
+title: Commission & Payout Platform
+headline: Architecture for a platform of roughly 75 modules.
+summary: A commission and payout platform of roughly 75 modules, developed for pilot use. I led the architecture and worked across the stack.
+role: Architecture lead and full-stack contributor
+category: engineering
+tier: case-study
+status: Pilot phase
+statusKind: pilot
+featured: true
+order: 1
+visual: modules
+team: Built with two backend developers
+highlights:
+  - { icon: modules, title: Module boundaries., text: 'Each of roughly 75 modules has a clear responsibility, so the platform can keep growing without tangling.' }
+  - { icon: database, title: Data modelling., text: 'A data model that represents the business accurately and can evolve safely as rules change.' }
+  - { icon: migrate, title: Safe migrations., text: 'Schema changes that are repeatable, reviewable and safe to run against real data.' }
+  - { icon: team, title: Team work., text: 'Built with two backend developers. I led the architecture and contributed across the stack.' }
+---
+
+{/* The product name is confidential and must not be published (confirmed by owner).
+    Do NOT add the name, client details, screenshots, tenant counts, volumes or outcomes.
+    CONFIRM: dates; stack; what the pilot is validating. */}
+
+## Overview
+
+The platform handles commissions and payouts. It is currently **in its pilot phase**. It is not yet in full production use.
+
+It has grown to roughly **75 modules**, which makes structure the central engineering problem. When there are this many parts, the system needs clear boundaries to stay understandable.
+
+## My role
+
+- I **led the architecture** of the platform.
+- I **contributed to full-stack development** alongside two backend developers.
+- I worked on the **database migrations** that moved the system's data model forward as it grew.
+
+This was team work. The platform is the result of the three of us working together, not of one person.
+
+## The engineering problem
+
+Commission and payout systems sit where business rules meet money. Mistakes are expensive, and the rules change. That combination puts pressure on three things:
+
+- **Module organisation.** Each module needs a clear responsibility, so the platform can keep growing without becoming tangled.
+- **Data modelling.** The data model has to represent the business accurately and evolve safely.
+- **Migrations.** Changes to the schema have to be repeatable and reviewable, and safe to run against real data.
+
+{/* CONFIRM: concrete decisions and trade-offs (e.g. how modules are grouped,
+    how migrations are managed and reviewed). Add only what can be published. */}
+
+## Where it stands
+
+The platform has been developed for pilot use and is in its pilot phase now. This case study will be extended with lessons from the pilot as they can be shared.

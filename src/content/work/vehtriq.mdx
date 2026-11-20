@@ -1,0 +1,71 @@
+---
+title: Vehtriq
+headline: Fleet intelligence, starting with fuel.
+summary: AI-powered fleet intelligence for small and medium-sized fleet operators, starting with a costly blind spot, which is fuel.
+role: Founder, product and architecture
+category: product
+tier: case-study
+status: In development
+statusKind: in-development
+featured: true
+order: 2
+visual: domains
+techLabel: Chosen stack
+highlights:
+  - { icon: fuel, title: Fuel first., text: 'Start with one costly blind spot, fuel, and solve it well before expanding.' }
+  - { icon: map, title: The whole fleet., text: 'Organised around vehicles, drivers, maintenance, trips and compliance.' }
+  - { icon: edge, title: Edge-first., text: 'Hono on Cloudflare Workers, with Neon (PostgreSQL) through Hyperdrive.' }
+  - { icon: spark, title: Multi-model AI., text: 'Gemini for document OCR workflows, Claude for narrative and diagnostic reasoning.' }
+tech:
+  - Cloudflare Workers
+  - Hono
+  - Neon (PostgreSQL)
+  - Hyperdrive
+  - R2, KV, Durable Objects, Queues
+  - Gemini
+  - Claude
+---
+
+import VehtriqArchitecture from '@/components/work/VehtriqArchitecture.astro';
+
+{/* CONFIRM before launch: which capabilities are implemented today vs planned;
+    any user/discovery evidence that can be shared; dates. Everything below is
+    written as direction, not as shipped functionality. */}
+
+## Overview
+
+Vehtriq is my founder project: **AI-powered fleet intelligence** for operators who run vehicles as a business. It is **in development**. Everything on this page describes the product's direction and the architecture I have chosen. It is not a list of finished features.
+
+## The problem
+
+Small and medium-sized fleet operators often manage vehicles, drivers and costs across scattered tools, paperwork and messages. **Fuel cost** is a particularly important blind spot. It's one of the largest running costs and one of the hardest to see clearly.
+
+The goal is simple to say: help operators **understand and manage what is happening across their fleet**.
+
+## Product direction
+
+The product is organised around the everyday work of running a fleet:
+
+- **Vehicles**: the fleet itself
+- **Drivers**: who is driving what
+- **Maintenance**: keeping vehicles on the road
+- **Trips**: what each vehicle is doing
+- **Compliance**: documents and obligations
+- **AI-assisted insights**: making sense of all of the above
+
+## Architecture direction
+
+I chose a **Cloudflare-first** architecture. Most of the system runs at the edge, with managed services where they fit.
+
+<VehtriqArchitecture />
+
+- **API:** Hono on Cloudflare Workers.
+- **Data:** Neon (PostgreSQL), connected through Hyperdrive.
+- **Platform services:** R2, KV, Durable Objects and Queues, each used where it is the appropriate tool rather than by default.
+- **AI:** a multi-model gateway. **Gemini** handles OCR-related workflows, for example reading documents. **Claude** handles narrative and diagnostic reasoning.
+
+The multi-model choice is a deliberate trade-off. It gives each task the model best suited to it, at the cost of an extra layer to design and operate.
+
+## Scope and trade-offs
+
+The first audience is small and medium-sized operators, and fuel-cost visibility is the first problem. Narrowing the scope this way keeps the minimum viable product honest. It focuses on one problem that is clearly worth solving before expanding.
