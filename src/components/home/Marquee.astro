@@ -1,38 +1,61 @@
 ---
 /**
  * Organisations, products and brands from the work on this site, as a slow
- * marquee of discs. Names only: no client logos are used without permission.
+ * marquee of pills. Logos (supplied by the owner) are shown as white marks so
+ * they sit together; projects without a logo show their name.
  * The commission and payout platform is deliberately absent (confidential).
  */
-const items = [
-  { name: 'Greenleaf Africa', size: 'lg' },
-  { name: 'Vehtriq', size: 'md' },
-  { name: 'Equalsphere', size: 'lg' },
-  { name: 'Finham', size: 'sm' },
-  { name: 'Ensome', size: 'md' },
-  { name: 'Finspa', size: 'sm' },
-  { name: 'Pure Match', size: 'md' },
-  { name: 'AWAH Books', size: 'lg' },
-] as const;
-const sizes = { sm: 'size-24 md:size-28 text-sm', md: 'size-28 md:size-32 text-base', lg: 'size-32 md:size-40 text-lg' };
+import { Image } from 'astro:assets';
+import greenleaf from '@/assets/logos/greenleaf-africa.png';
+import stratagem from '@/assets/logos/stratagem.png';
+import aaihub from '@/assets/logos/africa-ai-hub.png';
+import waes from '@/assets/logos/waes.png';
+import listro from '@/assets/logos/listro.png';
+import sterklean from '@/assets/logos/sterklean.png';
+import equalsphere from '@/assets/logos/equalsphere.png';
+import tech1m from '@/assets/logos/tech1m.png';
+import tainsight from '@/assets/logos/ta-insight-hub.png';
+
+type Item = { name: string; logo?: ImageMetadata; tall?: boolean };
+const items: Item[] = [
+  { name: 'Greenleaf Africa', logo: greenleaf },
+  { name: 'Vehtriq' },
+  { name: 'Stratagem Africa', logo: stratagem },
+  { name: 'Equalsphere', logo: equalsphere },
+  { name: 'West Africa Economic Summit', logo: waes, tall: true },
+  { name: 'AAIHub', logo: aaihub },
+  { name: 'Finham' },
+  { name: 'LISTRO', logo: listro },
+  { name: 'Tech1M', logo: tech1m },
+  { name: 'Sterklean', logo: sterklean },
+  { name: 'Pure Match' },
+  { name: 'TA Insight Hub', logo: tainsight },
+  { name: 'AWAH Books' },
+  { name: 'Finspa' },
+  { name: 'Ensome' },
+];
 ---
 
 <section aria-labelledby="marquee-title" class="frame-rule">
   <div class="container-site py-6 md:py-8">
-    <h2 id="marquee-title" class="text-sm font-medium">Teams, products and brands I've worked with</h2>
+    <h2 id="marquee-title" class="text-sm font-medium">Teams, products and brands I've built for</h2>
     <div class="marquee card mt-4 overflow-hidden py-10 md:py-14">
       <div class="track flex w-max items-center">
         {
           [0, 1].map((copy) => (
             <ul class="flex items-center gap-4 pr-4 md:gap-6 md:pr-6" aria-hidden={copy === 1 ? 'true' : undefined}>
               {items.map((it) => (
-                <li
-                  class:list={[
-                    'on-dark grid shrink-0 place-items-center rounded-full bg-night p-3 dark:ring-1 dark:ring-white/12 text-center leading-tight font-semibold tracking-tight text-snow shadow-[var(--shadow-soft)]',
-                    sizes[it.size],
-                  ]}
-                >
-                  {it.name}
+                <li class="on-dark grid h-20 shrink-0 place-items-center rounded-full bg-night px-8 text-snow shadow-[var(--shadow-soft)] md:h-24 md:px-10 dark:ring-1 dark:ring-white/12">
+                  {it.logo ? (
+                    <Image
+                      src={it.logo}
+                      alt={copy === 1 ? '' : it.name}
+                      height={it.tall ? 112 : 64}
+                      class:list={['!object-contain opacity-90', it.tall ? '!h-12 !w-auto md:!h-14' : '!h-auto !max-h-8 !w-36 md:!max-h-9 md:!w-40']}
+                    />
+                  ) : (
+                    <span class="text-base font-semibold tracking-tight whitespace-nowrap md:text-lg">{it.name}</span>
+                  )}
                 </li>
               ))}
             </ul>
@@ -50,7 +73,7 @@ const sizes = { sm: 'size-24 md:size-28 text-sm', md: 'size-28 md:size-32 text-b
   }
   @media (prefers-reduced-motion: no-preference) {
     .track {
-      animation: marquee 40s linear infinite;
+      animation: marquee 70s linear infinite;
     }
     .marquee:hover .track {
       animation-play-state: paused;

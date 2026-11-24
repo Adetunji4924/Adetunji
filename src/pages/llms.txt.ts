@@ -11,6 +11,7 @@ import { getCaseStudies, getArchive, getArticles } from '@/lib/content';
 export const GET: APIRoute = async ({ site: base }) => {
   const url = (path: string) => new URL(path, base).href;
   const cases = await getCaseStudies();
+  const websites = await getArchive('websites');
   const archive = [...(await getArchive('development')), ...(await getArchive('design'))];
   const articles = await getArticles();
 
@@ -33,6 +34,10 @@ export const GET: APIRoute = async ({ site: base }) => {
       (w) =>
         `- [${w.data.title}](${url(`/work/${w.id}`)}): ${w.data.summary} Role: ${w.data.role}. Status: ${w.data.status}. Category: ${categories[w.data.category]}.`,
     ),
+    '',
+    '## Websites (designed and built, live)',
+    '',
+    ...websites.map((w) => `- [${w.data.title}](${w.data.links[0]?.href ?? url('/work')}): ${w.data.summary} ${w.data.role}.`),
     '',
     '## Earlier projects',
     '',

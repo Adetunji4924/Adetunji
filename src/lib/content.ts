@@ -19,7 +19,7 @@ export async function getFeaturedWork() {
   return (await getCaseStudies()).filter((w) => w.data.featured);
 }
 
-export async function getArchive(group: 'development' | 'design') {
+export async function getArchive(group: 'websites' | 'development' | 'design') {
   return (await getWork()).filter((w) => w.data.tier === 'archive' && w.data.archiveGroup === group);
 }
 

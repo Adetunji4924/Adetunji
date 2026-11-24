@@ -76,7 +76,7 @@ Nothing deploys automatically from this repository yet. Production is still the 
    - Build command: `npm run build`. Deploy command: `npx wrangler deploy`.
    - The Worker name (`adetunji` in `wrangler.jsonc`) becomes the address: `adetunji.<your-account-subdomain>.workers.dev`. Set the account subdomain once under Workers & Pages → your subdomain.
 2. Add a build variable `SITE_URL` = that workers.dev address. The build refuses to run on Cloudflare without it, so links never point at localhost.
-3. Node: Cloudflare's build image reads `.nvmrc` (22.23.5).
+3. Node: Cloudflare's build image reads `.nvmrc` (`22`, which uses the Node 22 already installed in the image).
 
 **When the domain is bought**
 

@@ -7,6 +7,7 @@ export const categories = {
   product: 'Products & Innovation',
   leadership: 'Technology Leadership',
   design: 'Design & Brand',
+  web: 'Websites',
 } as const;
 
 export type CategoryKey = keyof typeof categories;
@@ -25,7 +26,7 @@ const work = defineCollection({
       headline: z.string().optional(),
       summary: z.string().max(180),
       role: z.string(),
-      category: z.enum(['engineering', 'product', 'leadership', 'design']),
+      category: z.enum(['engineering', 'product', 'leadership', 'design', 'web']),
       tier: z.enum(['case-study', 'archive']),
       /** Human-readable status, e.g. "Pilot phase". Must be factual. */
       status: z.string(),
@@ -42,7 +43,7 @@ const work = defineCollection({
       tech: z.array(z.string()).default([]),
       techLabel: z.string().default('Technologies'),
       links: z.array(z.object({ label: z.string(), href: z.url() })).default([]),
-      archiveGroup: z.enum(['development', 'design']).optional(),
+      archiveGroup: z.enum(['websites', 'development', 'design']).optional(),
       /** Up to four facts from the case study, shown as cards. Facts only. */
       highlights: z
         .array(

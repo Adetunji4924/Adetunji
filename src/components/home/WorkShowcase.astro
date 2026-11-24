@@ -19,6 +19,11 @@ const { title = 'Work.', archiveDetail = false } = Astro.props;
 const all = await getWork();
 const caseStudies = all.filter((w) => w.data.tier === 'case-study');
 const archive = all.filter((w) => w.data.tier === 'archive');
+// Recent live websites get their own group, ahead of the earlier archive.
+const groups = [
+  { key: 'websites', title: 'Websites', aside: ', designed and built. All live.', items: archive.filter((w) => w.data.archiveGroup === 'websites') },
+  { key: 'earlier', title: 'Earlier work', aside: ', in engineering and design.', items: archive.filter((w) => w.data.archiveGroup !== 'websites') },
+].filter((g) => g.items.length > 0);
 
 const counts = (Object.keys(categories) as CategoryKey[])
   .map((key) => ({ key, label: categories[key], count: all.filter((w) => w.data.category === key).length }))
@@ -103,12 +108,13 @@ const href = (w: Work) => (w.data.tier === 'case-study' ? `/work/${w.id}` : `/wo
       ))
     }
 
-    <div class="frame-rule" data-work-group>
+    {groups.map((g) => (
+    <div class="frame-rule" data-work-group id={g.key === 'websites' ? 'websites' : undefined}>
       <div class="container-site py-14 md:py-20">
-        <h3 class="text-[length:var(--text-h3)]">Earlier work<span class="text-muted">, in engineering and design.</span></h3>
+        <h3 class="text-[length:var(--text-h3)]">{g.title}<span class="text-muted">{g.aside}</span></h3>
         <ul class="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {
-            archive.map((w, i) => (
+            g.items.map((w, i) => (
               <li id={w.id} class="work-item scroll-mt-28" data-category={w.data.category} data-reveal={String(i % 3)}>
                 {archiveDetail ? (
                   <div class="card flex h-full flex-col p-3">
@@ -152,6 +158,7 @@ const href = (w: Work) => (w.data.tier === 'case-study' ? `/work/${w.id}` : `/wo
         </ul>
       </div>
     </div>
+    ))}
   </div>
 
   <!-- Grid: everything as equal cards (enabled by JS) -->
